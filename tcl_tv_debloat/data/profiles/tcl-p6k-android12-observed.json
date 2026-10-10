@@ -1,0 +1,1642 @@
+{
+  "schema_version": 1,
+  "name": "TCL P6K Android 12 observed",
+  "manufacturer": "TCL",
+  "product": "G10_4K_GB_NF_32BIT",
+  "fingerprint": "TCL/G10_4K_GB_NF_32BIT/G10:12/STT2.230203.001/AS12:user/release-keys",
+  "verification": "observed",
+  "rules": {
+    "com.tcl.hearaid": {
+      "version_code": 11909,
+      "version_name": "1.19.09",
+      "category": "optional",
+      "reason": "Accessibility audio and volume adaptation.",
+      "features": [
+        "TCL hearing assistance"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.tts": {
+      "version_code": 210414468,
+      "version_name": "googletts.google-speech-apk_20230206.01_p2.509666633",
+      "category": "optional",
+      "reason": "Spoken output used by accessibility and applications.",
+      "features": [
+        "Google text to speech"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.marvin.talkback": {
+      "version_code": 60139641,
+      "version_name": "14.1.0.644281411 leanback",
+      "category": "optional",
+      "reason": "Screen reader; keep if you use spoken accessibility.",
+      "features": [
+        "TalkBack"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.suspension": {
+      "version_code": 3405,
+      "version_name": "3.4.5.8a015a6.nps",
+      "category": "protected",
+      "reason": "Quick settings and overlay controls.",
+      "features": [
+        "TCL quick controls"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.waterfall.overseas": {
+      "version_code": 10783,
+      "version_name": "6.6.1.4.e7442fc",
+      "category": "review",
+      "reason": "TCL portal with web browsing, video and Google measurement services; launcher integration needs review.",
+      "features": [
+        "TCL Waterfall"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.smartalexa": {
+      "version_code": 613180000,
+      "version_name": "6.13.18_8e93d75_25050720",
+      "category": "optional",
+      "reason": "Amazon Alexa integration, separate from Google Assistant.",
+      "features": [
+        "TCL Alexa"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.repairguide": {
+      "version_code": 15010,
+      "version_name": "1.50.10_aedd78a_251016",
+      "category": "optional",
+      "reason": "Optional troubleshooting and repair help.",
+      "features": [
+        "TCL repair guide"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.ocean.instructions": {
+      "version_code": 30001,
+      "version_name": "3.00.01_114f634_250929",
+      "category": "optional",
+      "reason": "On-screen instructions.",
+      "features": [
+        "TCL manual"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.realtek.airplay2": {
+      "version_code": 1,
+      "version_name": "1.0-04fe853c-release",
+      "category": "review",
+      "reason": "AirPlay support; dependencies need review.",
+      "features": [
+        "Realtek AirPlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.apps.mediashell": {
+      "version_code": 425634212,
+      "version_name": "3.72.425634",
+      "category": "protected",
+      "reason": "Google Cast receiver; keep for casting.",
+      "features": [
+        "Chromecast built in"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.miracast": {
+      "version_code": 200000255,
+      "version_name": "2.3.938cc82",
+      "category": "review",
+      "reason": "Screen sharing; dependencies need review.",
+      "features": [
+        "TCL Miracast"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.airplay2": {
+      "version_code": 165,
+      "version_name": "1.1.65",
+      "category": "review",
+      "reason": "AirPlay integration; dependencies need review.",
+      "features": [
+        "TCL AirPlay service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "android.auto_generated_rro_product__": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: auto_generated_rro_product__"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.modules.modulemetadata.forframework": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: forframework"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.modules.permissioncontroller.forframework": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: forframework"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.realtek.tv.overlay.framework": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: framework"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.globalkeyoverlay": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: globalkeyoverlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.googlewebview": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: googlewebview"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tethering.overlay.gsi": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: gsi"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.gtvsconfigx": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: gtvsconfigx"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.gtvssettingsprovider": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: gtvssettingsprovider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.overlay.networkstack.inprocess": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: inprocess"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.overlay.lowram": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: lowram"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tethering.overlay": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: overlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.realtek.wifi.resources.overlay": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: overlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.modules.permissioncontroller": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: permissioncontroller"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.overlay.wifi.resources": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: resources"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.settings.gms.resoverlay": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: resoverlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.settings.google.resoverlay": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: resoverlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.settings.vendor.resoverlay": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: resoverlay"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.overlay.modules.ext.services": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: services"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.overlay.settingsprovider": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "System resource configuration. Keep enabled.",
+      "features": [
+        "Resource overlay: settingsprovider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.channelplus": {
+      "version_code": 21110,
+      "version_name": "2.11.10_9c3fb93_250801",
+      "category": "optional",
+      "reason": "Optional TCL content and channel service.",
+      "features": [
+        "TCL Channels / TCL Live"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.usercenter": {
+      "version_code": 4025,
+      "version_name": "4.0.2.5.250806",
+      "category": "optional",
+      "reason": "TCL account integration; keep if you use its services.",
+      "features": [
+        "TCL account"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.esticker": {
+      "version_code": 70601,
+      "version_name": "7.06.01_97254f8_251230",
+      "category": "review",
+      "reason": "Retail demonstration components; dependencies need review.",
+      "features": [
+        "TCL E-Sticker"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.exhibit": {
+      "version_code": 26214,
+      "version_name": "2.62.14_71dc974_2511051919",
+      "category": "review",
+      "reason": "Retail demonstration components; dependencies need review.",
+      "features": [
+        "TCL Exhibit"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.feedback": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "optional",
+      "reason": "Feedback and diagnostic reporting interface.",
+      "features": [
+        "Google Feedback"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.logkit": {
+      "version_code": 14901,
+      "version_name": "1.49.01_e7884b8_251023",
+      "category": "optional",
+      "reason": "Diagnostic logging with a boot receiver; static code does not prove continuous collection.",
+      "features": [
+        "TCL Logkit"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing.",
+      "reviewed_selectors": [
+        {
+          "apk_sha256": "3d0f7b383afae0ce471160bbe244899d6fdaff7254ad8da0397567df672b8ae8",
+          "class_name": "com.tcl.logkit.BootCompletedReceiver",
+          "method_name": "onReceive",
+          "signature": "onReceive(android.content.Context, android.content.Intent): void"
+        }
+      ]
+    },
+    "com.google.android.katniss": {
+      "version_code": 15001332,
+      "version_name": "7.15.20240818.2",
+      "category": "protected",
+      "reason": "Voice assistant and television search.",
+      "features": [
+        "Google Assistant / TV search"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.gms": {
+      "version_code": 243137119,
+      "version_name": "24.31.37 (180306-662270918)",
+      "category": "protected",
+      "reason": "Core Google services used by smart applications.",
+      "features": [
+        "Google Play Services"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.vending": {
+      "version_code": 84241418,
+      "version_name": "42.4.14-31 [8] [PR] 663813601",
+      "category": "protected",
+      "reason": "Application installation and updates.",
+      "features": [
+        "Google Play Store"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.gsf": {
+      "version_code": 31,
+      "version_name": "12-7789230",
+      "category": "protected",
+      "reason": "Google account and service integration.",
+      "features": [
+        "Google Services Framework"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.gamebar": {
+      "version_code": 41032,
+      "version_name": "4.10.32_8176794_250617",
+      "category": "review",
+      "reason": "Gaming controls; hardware integrations need review.",
+      "features": [
+        "TCL Game Bar"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.magiconnectfree": {
+      "version_code": 10020,
+      "version_name": "1.0.0.20",
+      "category": "optional",
+      "reason": "Optional TCL phone casting and remote control.",
+      "features": [
+        "MagiConnect / T-Cast"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.dreams.basic": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "optional",
+      "reason": "Basic screensaver.",
+      "features": [
+        "Android screensaver"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.apps.tv.dreamx": {
+      "version_code": 259344,
+      "version_name": "3.0.0.670859484",
+      "category": "optional",
+      "reason": "Ambient screensaver.",
+      "features": [
+        "Google TV screensaver"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.wallpaper.livepicker": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "optional",
+      "reason": "Live wallpaper selection.",
+      "features": [
+        "Live wallpaper picker"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.printspooler": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "optional",
+      "reason": "Printing support.",
+      "features": [
+        "Print service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.syncadapters.calendar": {
+      "version_code": 2017005136,
+      "version_name": "2021.23.3-389584493-release",
+      "category": "optional",
+      "reason": "Calendar synchronization.",
+      "features": [
+        "Google calendar sync"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.tv.tclhome_passive": {
+      "version_code": 10239,
+      "version_name": "1.2.3.9",
+      "category": "review",
+      "reason": "Phone remote control and casting integration; review dependencies.",
+      "features": [
+        "TCL Home"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.htmlviewer": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "optional",
+      "reason": "Local HTML document viewer.",
+      "features": [
+        "HTML viewer"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.guard": {
+      "version_code": 30000,
+      "version_name": "3.00.00_ff56abb_251114",
+      "category": "review",
+      "reason": "Maintenance service with reporting code; dependencies unresolved.",
+      "features": [
+        "TCL TV Guard"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing.",
+      "reviewed_selectors": [
+        {
+          "apk_sha256": "925836531bd9f4e92c3a6015149a61b090a86c539ac1b507b5c65f4e533b6f67",
+          "class_name": "com.tcl.guard.datareport.DataReportCenter",
+          "method_name": "reportBi",
+          "signature": "reportBi(java.lang.String, java.util.HashMap<java.lang.String, java.lang.String>): void"
+        },
+        {
+          "apk_sha256": "925836531bd9f4e92c3a6015149a61b090a86c539ac1b507b5c65f4e533b6f67",
+          "class_name": "com.tcl.guard.bi.DataReportImpl",
+          "method_name": "reportBi",
+          "signature": "reportBi(java.lang.String, java.util.HashMap<java.lang.String, java.lang.String>): void"
+        }
+      ]
+    },
+    "com.google.android.apps.tv.launcherx": {
+      "version_code": 537665,
+      "version_name": "1.0.669477562",
+      "category": "protected",
+      "reason": "Primary home screen and smart content navigation.",
+      "features": [
+        "Google TV Home"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.partnercustomizer": {
+      "version_code": 943,
+      "version_name": "9.43.gl.bfdfb58",
+      "category": "review",
+      "reason": "Launcher customization with Waterfall references; dependencies unresolved.",
+      "features": [
+        "TCL Google TV customization"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing.",
+      "reviewed_selectors": [
+        {
+          "apk_sha256": "c6a17f19f3b7ed606210139a20eaf96a69eb58d1d2a86a11252d4c5aa2cf79ac",
+          "class_name": "com.tcl.partnercustomizer.CustomizerApiImpl",
+          "method_name": "isInstalledOldVersion",
+          "signature": "isInstalledOldVersion(): boolean"
+        },
+        {
+          "apk_sha256": "c6a17f19f3b7ed606210139a20eaf96a69eb58d1d2a86a11252d4c5aa2cf79ac",
+          "class_name": "com.tcl.partnercustomizer.CustomizerApiImpl",
+          "method_name": "checkWaterfallVersion",
+          "signature": "checkWaterfallVersion(java.lang.String): void"
+        }
+      ]
+    },
+    "com.google.android.play.games": {
+      "version_code": 517324270,
+      "version_name": "2024.03.51732 (646593252.646593252-020700)",
+      "category": "optional",
+      "reason": "Optional game services.",
+      "features": [
+        "Google Play Games"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.UpdatePeripheral": {
+      "version_code": 21001,
+      "version_name": "2.10.1_59018ef_25042909",
+      "category": "protected",
+      "reason": "Peripheral firmware updates.",
+      "features": [
+        "TCL peripheral updater"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.autopair": {
+      "version_code": 16,
+      "version_name": "jedi.trunk.autopair.v24.06.18",
+      "category": "protected",
+      "reason": "Remote control and accessory pairing.",
+      "features": [
+        "TCL auto pairing"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.tv.remote.service": {
+      "version_code": 95855326,
+      "version_name": "6.0.648630202",
+      "category": "protected",
+      "reason": "Phone remote control support.",
+      "features": [
+        "Google TV remote service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.messagebox": {
+      "version_code": 41007,
+      "version_name": "4.10.07",
+      "category": "review",
+      "reason": "TCL notification service; dependencies unresolved.",
+      "features": [
+        "TCL messages"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.dashboard": {
+      "version_code": 1683,
+      "version_name": "1.683_bb34d3e_250514",
+      "category": "review",
+      "reason": "Dashboard controls; dependencies unresolved.",
+      "features": [
+        "TCL Dashboard"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.webview": {
+      "version_code": 609923030,
+      "version_name": "120.0.6099.230",
+      "category": "protected",
+      "reason": "Web rendering used by other applications.",
+      "features": [
+        "Android System WebView"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.android.webview": {
+      "version_code": 390410800,
+      "version_name": "78.0.3904.108",
+      "category": "protected",
+      "reason": "Vendor web rendering used by applications.",
+      "features": [
+        "TCL WebView"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.ui_mediaCenter": {
+      "version_code": 800003043,
+      "version_name": "8.30.43",
+      "category": "review",
+      "reason": "Local media browsing; integrations need review.",
+      "features": [
+        "TCL Media Center"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.interactive": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "Shared system interaction components.",
+      "features": [
+        "TCL interaction service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.t_solo": {
+      "version_code": 3049,
+      "version_name": "3.0.49",
+      "category": "review",
+      "reason": "Vendor service whose dependencies need review.",
+      "features": [
+        "TCL T-Solo"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "android.autoinstalls.config.google.gtvpai": {
+      "version_code": 1,
+      "version_name": "1",
+      "category": "review",
+      "reason": "Application provisioning configuration; dependencies need review.",
+      "features": [
+        "Preinstalled app configuration"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.useragreement": {
+      "version_code": 10932,
+      "version_name": "1.09.32_dcbe67f_250711",
+      "category": "review",
+      "reason": "Vendor consent and agreement interface; dependencies need review.",
+      "features": [
+        "TCL agreements"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "tv.samba.ssm.ui": {
+      "version_code": 5433,
+      "version_name": "3.2.7",
+      "category": "optional",
+      "reason": "Samba opt-in interface; disabling this package does not establish that reporting elsewhere stops.",
+      "features": [
+        "Samba TV"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing.",
+      "reviewed_selectors": [
+        {
+          "apk_sha256": "82a09c1deef13412af2187859a3d1eefc7dae7920fdbcf9e70994ae5bfddc7a7",
+          "class_name": "tv.samba.ssm.SsmApiServiceApplication",
+          "method_name": "onCreate",
+          "signature": "onCreate(): void"
+        }
+      ]
+    },
+    "com.android.externalstorage": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Shared external storage access.",
+      "features": [
+        "External storage"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.factory.view": {
+      "version_code": 1511250915,
+      "version_name": "3.0.e15d669",
+      "category": "protected",
+      "reason": "Hardware and factory configuration.",
+      "features": [
+        "TCL factory settings"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.settings": {
+      "version_code": 32500,
+      "version_name": "3.25.00_e2cd85b_260108_IP",
+      "category": "protected",
+      "reason": "Television settings interface.",
+      "features": [
+        "TV settings"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.keychain": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Certificate management and selection.",
+      "features": [
+        "Certificate store"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.managedprovisioning": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Device provisioning.",
+      "features": [
+        "Managed provisioning"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.tungsten.setupwraith": {
+      "version_code": 2018115108,
+      "version_name": "1.0.683016637",
+      "category": "protected",
+      "reason": "Initial Google TV setup.",
+      "features": [
+        "Google TV setup"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.companiondevicemanager": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Companion devices and accessories.",
+      "features": [
+        "Accessory association"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.settings": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System settings persistence.",
+      "features": [
+        "Settings database"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.tv": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Channels and program information.",
+      "features": [
+        "TV database"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.ext.shared": {
+      "version_code": 1,
+      "version_name": "1",
+      "category": "protected",
+      "reason": "Shared Android service library.",
+      "features": [
+        "Extended shared library"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.tv.frameworkpackagestubs": {
+      "version_code": 1,
+      "version_name": "1.0.1",
+      "category": "protected",
+      "reason": "TV framework integration.",
+      "features": [
+        "TV framework helpers"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.bluetooth": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Remotes and Bluetooth accessories.",
+      "features": [
+        "Bluetooth"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.pacprocessor": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Automatic network proxy configuration.",
+      "features": [
+        "Proxy configuration"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.partnersetup": {
+      "version_code": 1114,
+      "version_name": "100.316795284",
+      "category": "protected",
+      "reason": "Google integration setup.",
+      "features": [
+        "Google partner setup"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.initsetup": {
+      "version_code": 21801,
+      "version_name": "2.18.01_d11f56d_251119",
+      "category": "protected",
+      "reason": "Initial vendor setup.",
+      "features": [
+        "TCL setup"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.providers.config": {
+      "version_code": 4,
+      "version_name": "4.0.0",
+      "category": "protected",
+      "reason": "Vendor configuration provider.",
+      "features": [
+        "TCL configuration"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.backupconfirm": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Backup and restore confirmation.",
+      "features": [
+        "Backup confirmation"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.sharedstoragebackup": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Shared storage backup.",
+      "features": [
+        "Storage backup"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.wallpaperbackup": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Wallpaper backup.",
+      "features": [
+        "Wallpaper backup"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.realtek.dongledetect": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Peripheral detection.",
+      "features": [
+        "Realtek peripheral detection"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.userdictionary": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Keyboard dictionary storage.",
+      "features": [
+        "User dictionary"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.inputdevices": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System input device management.",
+      "features": [
+        "Input devices"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.vpndialogs": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "VPN authorization interface.",
+      "features": [
+        "VPN dialogs"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.settings.intelligence": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Settings search and suggestions.",
+      "features": [
+        "Settings intelligence"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.realtek.power": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Power and standby management.",
+      "features": [
+        "Realtek power service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.permissioncontroller": {
+      "version_code": 311810030,
+      "version_name": "aml_per_311810030",
+      "category": "protected",
+      "reason": "Android permission management.",
+      "features": [
+        "Permission controller"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.proxyhandler": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Network proxy handling.",
+      "features": [
+        "Proxy handler"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.onetimeinitializer": {
+      "version_code": 31,
+      "version_name": "12-7789230",
+      "category": "protected",
+      "reason": "Initial Google service setup.",
+      "features": [
+        "Google initialization"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.captiveportallogin": {
+      "version_code": 319999900,
+      "version_name": "s_aml_319999900",
+      "category": "protected",
+      "reason": "Network login interface.",
+      "features": [
+        "Captive portal login"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.hotspot2.osulogin": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Passpoint network login.",
+      "features": [
+        "Passpoint login"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.certinstaller": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Certificate installation.",
+      "features": [
+        "Certificate installer"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.dynsystem": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Android system installation support.",
+      "features": [
+        "Dynamic system installer"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.packageinstaller": {
+      "version_code": 31,
+      "version_name": "12-7789230",
+      "category": "protected",
+      "reason": "Application package installation.",
+      "features": [
+        "Package installer"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.shell": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System administration interface.",
+      "features": [
+        "ADB shell"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.systemui": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System controls and notifications.",
+      "features": [
+        "System UI"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.modulemetadata": {
+      "version_code": 311820004,
+      "version_name": "2022-06-01 S+",
+      "category": "protected",
+      "reason": "Android module information.",
+      "features": [
+        "Module metadata"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.networkstack.permissionconfig": {
+      "version_code": 300000000,
+      "version_name": "2019-09",
+      "category": "protected",
+      "reason": "System network permission configuration.",
+      "features": [
+        "Network permissions"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.networkstack.inprocess": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Core networking.",
+      "features": [
+        "Android network stack"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.calendar": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Shared calendar data.",
+      "features": [
+        "Calendar provider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.contacts": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Shared contact data.",
+      "features": [
+        "Contacts provider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.media.module": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Media storage and access.",
+      "features": [
+        "Media provider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.media": {
+      "version_code": 1024,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Media storage and access.",
+      "features": [
+        "Legacy media provider"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.cts.priv.ctsshim": {
+      "version_code": 31,
+      "version_name": "12-7552332",
+      "category": "review",
+      "reason": "Android compatibility test components; review dependencies.",
+      "features": [
+        "Privileged CTS shim"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.cts.ctsshim": {
+      "version_code": 31,
+      "version_name": "12-7552332",
+      "category": "review",
+      "reason": "Android compatibility test components; review dependencies.",
+      "features": [
+        "CTS shim"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.connectivity.resources": {
+      "version_code": 1,
+      "version_name": "S-initial",
+      "category": "protected",
+      "reason": "Network configuration resources.",
+      "features": [
+        "Connectivity resources"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.wifi.resources": {
+      "version_code": 1,
+      "version_name": "R-initial",
+      "category": "protected",
+      "reason": "Wi-Fi configuration resources.",
+      "features": [
+        "Wi-Fi resources"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tvos": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "Vendor TV framework resources.",
+      "features": [
+        "TV framework resources"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "android": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Core Android resources and permissions.",
+      "features": [
+        "Android framework"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.soundpicker": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System sound selection.",
+      "features": [
+        "Sound picker"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.providers.downloads": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Application and system downloads.",
+      "features": [
+        "Download service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.se": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Secure element integration.",
+      "features": [
+        "Secure element service"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.location.fused": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "System location integration.",
+      "features": [
+        "Fused location"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.systemserver": {
+      "version_code": 1001,
+      "version_name": "1001",
+      "category": "protected",
+      "reason": "Core vendor system services.",
+      "features": [
+        "TCL system services"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.networkstack.tethering.inprocess": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Shared connectivity services.",
+      "features": [
+        "Tethering services"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.ext.services": {
+      "version_code": 311812040,
+      "version_name": "aml_ext_311812040",
+      "category": "protected",
+      "reason": "Android service integration.",
+      "features": [
+        "Extended Android services"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.android.localtransport": {
+      "version_code": 31,
+      "version_name": "12",
+      "category": "protected",
+      "reason": "Local backup support.",
+      "features": [
+        "Local backup transport"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.ttvs": {
+      "version_code": 105006,
+      "version_name": "10.50.06_61f413c_251029_overseaTV",
+      "category": "protected",
+      "reason": "Mixed core service: updates, casting, device services and reporting code. Keep enabled.",
+      "features": [
+        "TCL TTVS Core"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing.",
+      "reviewed_selectors": [
+        {
+          "apk_sha256": "489f938ddf5c47086ba2232c10ec247ec2d63df09582646684f859acd6dfd813",
+          "class_name": "com.tcl.ttvs.ssm.frameserver.SambaVideoService",
+          "method_name": "onStartCommand",
+          "signature": "onStartCommand(android.content.Intent, int, int): int"
+        },
+        {
+          "apk_sha256": "489f938ddf5c47086ba2232c10ec247ec2d63df09582646684f859acd6dfd813",
+          "class_name": "j.k.o.e.c",
+          "method_name": "b",
+          "signature": "b(): boolean"
+        },
+        {
+          "apk_sha256": "489f938ddf5c47086ba2232c10ec247ec2d63df09582646684f859acd6dfd813",
+          "class_name": "com.tcl.ttvs.ssm.frameserver.SambaVideoService",
+          "method_name": "onCreate",
+          "signature": "onCreate(): void"
+        },
+        {
+          "apk_sha256": "489f938ddf5c47086ba2232c10ec247ec2d63df09582646684f859acd6dfd813",
+          "class_name": "com.tcl.trackdata.service.TrackDataService",
+          "method_name": "onCreate",
+          "signature": "onCreate(): void"
+        }
+      ]
+    },
+    "com.android.statementservice": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "Application and website link verification.",
+      "features": [
+        "App link verification"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.antena3.atresplayer.tv": {
+      "version_code": 356,
+      "version_name": "4.32.2",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Atresplayer"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.disney.disneyplus": {
+      "version_code": 1791228670,
+      "version_name": "26.18.0+rc5-2026.10.05",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Disney+"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.netflix.tokenmanager": {
+      "version_code": 1,
+      "version_name": "1.0",
+      "category": "protected",
+      "reason": "Netflix vendor authorization integration.",
+      "features": [
+        "Netflix vendor integration"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.videos": {
+      "version_code": 44007093,
+      "version_name": "4.40.7.7-tv",
+      "category": "optional",
+      "reason": "Optional film and television library application.",
+      "features": [
+        "Google TV films"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.wbd.stream": {
+      "version_code": 1827131002,
+      "version_name": "7.13.1.2",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Max / HBO Max"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.movistarplus.androidtv": {
+      "version_code": 144,
+      "version_name": "26.06.103",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Movistar Plus+"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.netflix.ninja": {
+      "version_code": 19770,
+      "version_name": "11.0.1 build 19770",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Netflix"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.amazon.amazonvideo.livingroom": {
+      "version_code": 506003001,
+      "version_name": "6.3.1+v14.1.0.72-armv7a",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "Prime Video"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.rtve.androidtv": {
+      "version_code": 218,
+      "version_name": "8.1.9",
+      "category": "optional",
+      "reason": "Optional streaming application.",
+      "features": [
+        "RTVE Play"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.spotify.tv.android": {
+      "version_code": 146555507,
+      "version_name": "9.1.86.2429",
+      "category": "optional",
+      "reason": "Optional music application.",
+      "features": [
+        "Spotify"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.youtube.tv": {
+      "version_code": 512300320,
+      "version_name": "5.12.300",
+      "category": "optional",
+      "reason": "Optional video application.",
+      "features": [
+        "YouTube"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.youtube.tvmusic": {
+      "version_code": 111003320,
+      "version_name": "1.11.03",
+      "category": "optional",
+      "reason": "Optional music application.",
+      "features": [
+        "YouTube Music"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.tvinput": {
+      "version_code": 60202,
+      "version_name": "TVM6.2.2_4a43c4fb2_251126",
+      "category": "protected",
+      "reason": "Television input and tuner integration.",
+      "features": [
+        "TCL TV inputs"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.tv": {
+      "version_code": 31400,
+      "version_name": "3.14.00_f892bb2_251112",
+      "category": "protected",
+      "reason": "Broadcast television interface.",
+      "features": [
+        "TCL live television"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.google.android.inputmethod.latin": {
+      "version_code": 148255165,
+      "version_name": "14.5.08.646428777-tv_release-armeabi-v7a",
+      "category": "protected",
+      "reason": "Keyboard and text input.",
+      "features": [
+        "Gboard"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    },
+    "com.tcl.inputmethod.international": {
+      "version_code": 40501,
+      "version_name": "4.05.01_35234f2_250915",
+      "category": "review",
+      "reason": "Vendor text input; confirm another working keyboard before any change.",
+      "features": [
+        "TCL keyboard"
+      ],
+      "verification": "observed",
+      "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
+    }
+  }
+}

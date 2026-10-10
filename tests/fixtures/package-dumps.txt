@@ -1,0 +1,5 @@
+Package [com.example.optional]:
+  userId=10100
+  versionCode=7 minSdk=23
+  versionName=1.0
+  User 0: installed=true enabled=0

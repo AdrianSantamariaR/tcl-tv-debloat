@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "packages": {
+    "android": {
+      "label": "Android system",
+      "purpose": "Core framework",
+      "protected": true
+    }
+  },
+  "profiles": [
+    {
+      "manufacturer": "TCL",
+      "product": "fixture-product",
+      "fingerprint": "fixture/build",
+      "rules": {
+        "com.example.optional": {
+          "version_code": 7,
+          "version_name": "1.0",
+          "category": "optional",
+          "reason": "Optional fixture app",
+          "verification": "observed",
+          "features": [
+            "optional content"
+          ]
+        }
+      }
+    }
+  ]
+}

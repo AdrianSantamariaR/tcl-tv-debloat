@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.superpowers/
+*.apk
+*.jar
+sessions/
+evidence/
+plan.json
+journal.json
+inventory.json
+selection.json
+mutation.lock
+
+# Internal planning and local machine artifacts
+docs/superpowers/
+.codex/
+.agents/
+.DS_Store
+.env
+.env.*

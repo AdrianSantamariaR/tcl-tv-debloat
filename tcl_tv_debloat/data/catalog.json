@@ -1,0 +1,1141 @@
+{
+  "schema_version": 1,
+  "packages": {
+    "com.tcl.hearaid": {
+      "label": "TCL hearing assistance",
+      "purpose": "Accessibility audio and volume adaptation.",
+      "protected": false,
+      "features": [
+        "TCL hearing assistance"
+      ]
+    },
+    "com.google.android.tts": {
+      "label": "Google text to speech",
+      "purpose": "Spoken output used by accessibility and applications.",
+      "protected": false,
+      "features": [
+        "Google text to speech"
+      ]
+    },
+    "com.google.android.marvin.talkback": {
+      "label": "TalkBack",
+      "purpose": "Screen reader; keep if you use spoken accessibility.",
+      "protected": false,
+      "features": [
+        "TalkBack"
+      ]
+    },
+    "com.tcl.suspension": {
+      "label": "TCL quick controls",
+      "purpose": "Quick settings and overlay controls.",
+      "protected": true,
+      "features": [
+        "TCL quick controls"
+      ]
+    },
+    "com.tcl.waterfall.overseas": {
+      "label": "TCL Waterfall",
+      "purpose": "TCL portal with web browsing, video and Google measurement services; launcher integration needs review.",
+      "protected": false,
+      "features": [
+        "TCL Waterfall"
+      ]
+    },
+    "com.tcl.smartalexa": {
+      "label": "TCL Alexa",
+      "purpose": "Amazon Alexa integration, separate from Google Assistant.",
+      "protected": false,
+      "features": [
+        "TCL Alexa"
+      ]
+    },
+    "com.tcl.repairguide": {
+      "label": "TCL repair guide",
+      "purpose": "Optional troubleshooting and repair help.",
+      "protected": false,
+      "features": [
+        "TCL repair guide"
+      ]
+    },
+    "com.tcl.ocean.instructions": {
+      "label": "TCL manual",
+      "purpose": "On-screen instructions.",
+      "protected": false,
+      "features": [
+        "TCL manual"
+      ]
+    },
+    "com.realtek.airplay2": {
+      "label": "Realtek AirPlay",
+      "purpose": "AirPlay support; dependencies need review.",
+      "protected": false,
+      "features": [
+        "Realtek AirPlay"
+      ]
+    },
+    "com.google.android.apps.mediashell": {
+      "label": "Chromecast built in",
+      "purpose": "Google Cast receiver; keep for casting.",
+      "protected": true,
+      "features": [
+        "Chromecast built in"
+      ]
+    },
+    "com.tcl.miracast": {
+      "label": "TCL Miracast",
+      "purpose": "Screen sharing; dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL Miracast"
+      ]
+    },
+    "com.tcl.airplay2": {
+      "label": "TCL AirPlay service",
+      "purpose": "AirPlay integration; dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL AirPlay service"
+      ]
+    },
+    "android.auto_generated_rro_product__": {
+      "label": "Resource overlay: auto_generated_rro_product__",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: auto_generated_rro_product__"
+      ]
+    },
+    "com.google.android.overlay.modules.modulemetadata.forframework": {
+      "label": "Resource overlay: forframework",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: forframework"
+      ]
+    },
+    "com.google.android.overlay.modules.permissioncontroller.forframework": {
+      "label": "Resource overlay: forframework",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: forframework"
+      ]
+    },
+    "com.realtek.tv.overlay.framework": {
+      "label": "Resource overlay: framework",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: framework"
+      ]
+    },
+    "com.tcl.globalkeyoverlay": {
+      "label": "Resource overlay: globalkeyoverlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: globalkeyoverlay"
+      ]
+    },
+    "com.google.android.overlay.googlewebview": {
+      "label": "Resource overlay: googlewebview",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: googlewebview"
+      ]
+    },
+    "com.android.tethering.overlay.gsi": {
+      "label": "Resource overlay: gsi",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: gsi"
+      ]
+    },
+    "com.google.android.overlay.gtvsconfigx": {
+      "label": "Resource overlay: gtvsconfigx",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: gtvsconfigx"
+      ]
+    },
+    "com.google.android.overlay.gtvssettingsprovider": {
+      "label": "Resource overlay: gtvssettingsprovider",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: gtvssettingsprovider"
+      ]
+    },
+    "com.android.tv.overlay.networkstack.inprocess": {
+      "label": "Resource overlay: inprocess",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: inprocess"
+      ]
+    },
+    "com.android.tv.overlay.lowram": {
+      "label": "Resource overlay: lowram",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: lowram"
+      ]
+    },
+    "com.android.tethering.overlay": {
+      "label": "Resource overlay: overlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: overlay"
+      ]
+    },
+    "com.realtek.wifi.resources.overlay": {
+      "label": "Resource overlay: overlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: overlay"
+      ]
+    },
+    "com.google.android.overlay.modules.permissioncontroller": {
+      "label": "Resource overlay: permissioncontroller",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: permissioncontroller"
+      ]
+    },
+    "com.android.tv.overlay.wifi.resources": {
+      "label": "Resource overlay: resources",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: resources"
+      ]
+    },
+    "com.android.tv.settings.gms.resoverlay": {
+      "label": "Resource overlay: resoverlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: resoverlay"
+      ]
+    },
+    "com.android.tv.settings.google.resoverlay": {
+      "label": "Resource overlay: resoverlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: resoverlay"
+      ]
+    },
+    "com.android.tv.settings.vendor.resoverlay": {
+      "label": "Resource overlay: resoverlay",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: resoverlay"
+      ]
+    },
+    "com.google.android.overlay.modules.ext.services": {
+      "label": "Resource overlay: services",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: services"
+      ]
+    },
+    "com.android.tv.overlay.settingsprovider": {
+      "label": "Resource overlay: settingsprovider",
+      "purpose": "System resource configuration. Keep enabled.",
+      "protected": true,
+      "features": [
+        "Resource overlay: settingsprovider"
+      ]
+    },
+    "com.tcl.channelplus": {
+      "label": "TCL Channels / TCL Live",
+      "purpose": "Optional TCL content and channel service.",
+      "protected": false,
+      "features": [
+        "TCL Channels / TCL Live"
+      ]
+    },
+    "com.tcl.usercenter": {
+      "label": "TCL account",
+      "purpose": "TCL account integration; keep if you use its services.",
+      "protected": false,
+      "features": [
+        "TCL account"
+      ]
+    },
+    "com.tcl.esticker": {
+      "label": "TCL E-Sticker",
+      "purpose": "Retail demonstration components; dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL E-Sticker"
+      ]
+    },
+    "com.tcl.exhibit": {
+      "label": "TCL Exhibit",
+      "purpose": "Retail demonstration components; dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL Exhibit"
+      ]
+    },
+    "com.google.android.feedback": {
+      "label": "Google Feedback",
+      "purpose": "Feedback and diagnostic reporting interface.",
+      "protected": false,
+      "features": [
+        "Google Feedback"
+      ]
+    },
+    "com.tcl.logkit": {
+      "label": "TCL Logkit",
+      "purpose": "Diagnostic logging with a boot receiver; static code does not prove continuous collection.",
+      "protected": false,
+      "features": [
+        "TCL Logkit"
+      ]
+    },
+    "com.google.android.katniss": {
+      "label": "Google Assistant / TV search",
+      "purpose": "Voice assistant and television search.",
+      "protected": true,
+      "features": [
+        "Google Assistant / TV search"
+      ]
+    },
+    "com.google.android.gms": {
+      "label": "Google Play Services",
+      "purpose": "Core Google services used by smart applications.",
+      "protected": true,
+      "features": [
+        "Google Play Services"
+      ]
+    },
+    "com.android.vending": {
+      "label": "Google Play Store",
+      "purpose": "Application installation and updates.",
+      "protected": true,
+      "features": [
+        "Google Play Store"
+      ]
+    },
+    "com.google.android.gsf": {
+      "label": "Google Services Framework",
+      "purpose": "Google account and service integration.",
+      "protected": true,
+      "features": [
+        "Google Services Framework"
+      ]
+    },
+    "com.tcl.gamebar": {
+      "label": "TCL Game Bar",
+      "purpose": "Gaming controls; hardware integrations need review.",
+      "protected": false,
+      "features": [
+        "TCL Game Bar"
+      ]
+    },
+    "com.tcl.magiconnectfree": {
+      "label": "MagiConnect / T-Cast",
+      "purpose": "Optional TCL phone casting and remote control.",
+      "protected": false,
+      "features": [
+        "MagiConnect / T-Cast"
+      ]
+    },
+    "com.android.dreams.basic": {
+      "label": "Android screensaver",
+      "purpose": "Basic screensaver.",
+      "protected": false,
+      "features": [
+        "Android screensaver"
+      ]
+    },
+    "com.google.android.apps.tv.dreamx": {
+      "label": "Google TV screensaver",
+      "purpose": "Ambient screensaver.",
+      "protected": false,
+      "features": [
+        "Google TV screensaver"
+      ]
+    },
+    "com.android.wallpaper.livepicker": {
+      "label": "Live wallpaper picker",
+      "purpose": "Live wallpaper selection.",
+      "protected": false,
+      "features": [
+        "Live wallpaper picker"
+      ]
+    },
+    "com.android.printspooler": {
+      "label": "Print service",
+      "purpose": "Printing support.",
+      "protected": false,
+      "features": [
+        "Print service"
+      ]
+    },
+    "com.google.android.syncadapters.calendar": {
+      "label": "Google calendar sync",
+      "purpose": "Calendar synchronization.",
+      "protected": false,
+      "features": [
+        "Google calendar sync"
+      ]
+    },
+    "com.tcl.tv.tclhome_passive": {
+      "label": "TCL Home",
+      "purpose": "Phone remote control and casting integration; review dependencies.",
+      "protected": false,
+      "features": [
+        "TCL Home"
+      ]
+    },
+    "com.android.htmlviewer": {
+      "label": "HTML viewer",
+      "purpose": "Local HTML document viewer.",
+      "protected": false,
+      "features": [
+        "HTML viewer"
+      ]
+    },
+    "com.tcl.guard": {
+      "label": "TCL TV Guard",
+      "purpose": "Maintenance service with reporting code; dependencies unresolved.",
+      "protected": false,
+      "features": [
+        "TCL TV Guard"
+      ]
+    },
+    "com.google.android.apps.tv.launcherx": {
+      "label": "Google TV Home",
+      "purpose": "Primary home screen and smart content navigation.",
+      "protected": true,
+      "features": [
+        "Google TV Home"
+      ]
+    },
+    "com.tcl.partnercustomizer": {
+      "label": "TCL Google TV customization",
+      "purpose": "Launcher customization with Waterfall references; dependencies unresolved.",
+      "protected": false,
+      "features": [
+        "TCL Google TV customization"
+      ]
+    },
+    "com.google.android.play.games": {
+      "label": "Google Play Games",
+      "purpose": "Optional game services.",
+      "protected": false,
+      "features": [
+        "Google Play Games"
+      ]
+    },
+    "com.tcl.UpdatePeripheral": {
+      "label": "TCL peripheral updater",
+      "purpose": "Peripheral firmware updates.",
+      "protected": true,
+      "features": [
+        "TCL peripheral updater"
+      ]
+    },
+    "com.tcl.autopair": {
+      "label": "TCL auto pairing",
+      "purpose": "Remote control and accessory pairing.",
+      "protected": true,
+      "features": [
+        "TCL auto pairing"
+      ]
+    },
+    "com.google.android.tv.remote.service": {
+      "label": "Google TV remote service",
+      "purpose": "Phone remote control support.",
+      "protected": true,
+      "features": [
+        "Google TV remote service"
+      ]
+    },
+    "com.tcl.messagebox": {
+      "label": "TCL messages",
+      "purpose": "TCL notification service; dependencies unresolved.",
+      "protected": false,
+      "features": [
+        "TCL messages"
+      ]
+    },
+    "com.tcl.dashboard": {
+      "label": "TCL Dashboard",
+      "purpose": "Dashboard controls; dependencies unresolved.",
+      "protected": false,
+      "features": [
+        "TCL Dashboard"
+      ]
+    },
+    "com.google.android.webview": {
+      "label": "Android System WebView",
+      "purpose": "Web rendering used by other applications.",
+      "protected": true,
+      "features": [
+        "Android System WebView"
+      ]
+    },
+    "com.tcl.android.webview": {
+      "label": "TCL WebView",
+      "purpose": "Vendor web rendering used by applications.",
+      "protected": true,
+      "features": [
+        "TCL WebView"
+      ]
+    },
+    "com.tcl.ui_mediaCenter": {
+      "label": "TCL Media Center",
+      "purpose": "Local media browsing; integrations need review.",
+      "protected": false,
+      "features": [
+        "TCL Media Center"
+      ]
+    },
+    "com.tcl.interactive": {
+      "label": "TCL interaction service",
+      "purpose": "Shared system interaction components.",
+      "protected": true,
+      "features": [
+        "TCL interaction service"
+      ]
+    },
+    "com.tcl.t_solo": {
+      "label": "TCL T-Solo",
+      "purpose": "Vendor service whose dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL T-Solo"
+      ]
+    },
+    "android.autoinstalls.config.google.gtvpai": {
+      "label": "Preinstalled app configuration",
+      "purpose": "Application provisioning configuration; dependencies need review.",
+      "protected": false,
+      "features": [
+        "Preinstalled app configuration"
+      ]
+    },
+    "com.tcl.useragreement": {
+      "label": "TCL agreements",
+      "purpose": "Vendor consent and agreement interface; dependencies need review.",
+      "protected": false,
+      "features": [
+        "TCL agreements"
+      ]
+    },
+    "tv.samba.ssm.ui": {
+      "label": "Samba TV",
+      "purpose": "Samba opt-in interface; disabling this package does not establish that reporting elsewhere stops.",
+      "protected": false,
+      "features": [
+        "Samba TV"
+      ]
+    },
+    "com.android.externalstorage": {
+      "label": "External storage",
+      "purpose": "Shared external storage access.",
+      "protected": true,
+      "features": [
+        "External storage"
+      ]
+    },
+    "com.tcl.factory.view": {
+      "label": "TCL factory settings",
+      "purpose": "Hardware and factory configuration.",
+      "protected": true,
+      "features": [
+        "TCL factory settings"
+      ]
+    },
+    "com.android.tv.settings": {
+      "label": "TV settings",
+      "purpose": "Television settings interface.",
+      "protected": true,
+      "features": [
+        "TV settings"
+      ]
+    },
+    "com.android.keychain": {
+      "label": "Certificate store",
+      "purpose": "Certificate management and selection.",
+      "protected": true,
+      "features": [
+        "Certificate store"
+      ]
+    },
+    "com.android.managedprovisioning": {
+      "label": "Managed provisioning",
+      "purpose": "Device provisioning.",
+      "protected": true,
+      "features": [
+        "Managed provisioning"
+      ]
+    },
+    "com.google.android.tungsten.setupwraith": {
+      "label": "Google TV setup",
+      "purpose": "Initial Google TV setup.",
+      "protected": true,
+      "features": [
+        "Google TV setup"
+      ]
+    },
+    "com.android.companiondevicemanager": {
+      "label": "Accessory association",
+      "purpose": "Companion devices and accessories.",
+      "protected": true,
+      "features": [
+        "Accessory association"
+      ]
+    },
+    "com.android.providers.settings": {
+      "label": "Settings database",
+      "purpose": "System settings persistence.",
+      "protected": true,
+      "features": [
+        "Settings database"
+      ]
+    },
+    "com.android.providers.tv": {
+      "label": "TV database",
+      "purpose": "Channels and program information.",
+      "protected": true,
+      "features": [
+        "TV database"
+      ]
+    },
+    "com.google.android.ext.shared": {
+      "label": "Extended shared library",
+      "purpose": "Shared Android service library.",
+      "protected": true,
+      "features": [
+        "Extended shared library"
+      ]
+    },
+    "com.android.tv.frameworkpackagestubs": {
+      "label": "TV framework helpers",
+      "purpose": "TV framework integration.",
+      "protected": true,
+      "features": [
+        "TV framework helpers"
+      ]
+    },
+    "com.android.bluetooth": {
+      "label": "Bluetooth",
+      "purpose": "Remotes and Bluetooth accessories.",
+      "protected": true,
+      "features": [
+        "Bluetooth"
+      ]
+    },
+    "com.android.pacprocessor": {
+      "label": "Proxy configuration",
+      "purpose": "Automatic network proxy configuration.",
+      "protected": true,
+      "features": [
+        "Proxy configuration"
+      ]
+    },
+    "com.google.android.partnersetup": {
+      "label": "Google partner setup",
+      "purpose": "Google integration setup.",
+      "protected": true,
+      "features": [
+        "Google partner setup"
+      ]
+    },
+    "com.tcl.initsetup": {
+      "label": "TCL setup",
+      "purpose": "Initial vendor setup.",
+      "protected": true,
+      "features": [
+        "TCL setup"
+      ]
+    },
+    "com.tcl.providers.config": {
+      "label": "TCL configuration",
+      "purpose": "Vendor configuration provider.",
+      "protected": true,
+      "features": [
+        "TCL configuration"
+      ]
+    },
+    "com.android.backupconfirm": {
+      "label": "Backup confirmation",
+      "purpose": "Backup and restore confirmation.",
+      "protected": true,
+      "features": [
+        "Backup confirmation"
+      ]
+    },
+    "com.android.sharedstoragebackup": {
+      "label": "Storage backup",
+      "purpose": "Shared storage backup.",
+      "protected": true,
+      "features": [
+        "Storage backup"
+      ]
+    },
+    "com.android.wallpaperbackup": {
+      "label": "Wallpaper backup",
+      "purpose": "Wallpaper backup.",
+      "protected": true,
+      "features": [
+        "Wallpaper backup"
+      ]
+    },
+    "com.realtek.dongledetect": {
+      "label": "Realtek peripheral detection",
+      "purpose": "Peripheral detection.",
+      "protected": true,
+      "features": [
+        "Realtek peripheral detection"
+      ]
+    },
+    "com.android.providers.userdictionary": {
+      "label": "User dictionary",
+      "purpose": "Keyboard dictionary storage.",
+      "protected": true,
+      "features": [
+        "User dictionary"
+      ]
+    },
+    "com.android.inputdevices": {
+      "label": "Input devices",
+      "purpose": "System input device management.",
+      "protected": true,
+      "features": [
+        "Input devices"
+      ]
+    },
+    "com.android.vpndialogs": {
+      "label": "VPN dialogs",
+      "purpose": "VPN authorization interface.",
+      "protected": true,
+      "features": [
+        "VPN dialogs"
+      ]
+    },
+    "com.android.settings.intelligence": {
+      "label": "Settings intelligence",
+      "purpose": "Settings search and suggestions.",
+      "protected": true,
+      "features": [
+        "Settings intelligence"
+      ]
+    },
+    "com.realtek.power": {
+      "label": "Realtek power service",
+      "purpose": "Power and standby management.",
+      "protected": true,
+      "features": [
+        "Realtek power service"
+      ]
+    },
+    "com.google.android.permissioncontroller": {
+      "label": "Permission controller",
+      "purpose": "Android permission management.",
+      "protected": true,
+      "features": [
+        "Permission controller"
+      ]
+    },
+    "com.android.proxyhandler": {
+      "label": "Proxy handler",
+      "purpose": "Network proxy handling.",
+      "protected": true,
+      "features": [
+        "Proxy handler"
+      ]
+    },
+    "com.google.android.onetimeinitializer": {
+      "label": "Google initialization",
+      "purpose": "Initial Google service setup.",
+      "protected": true,
+      "features": [
+        "Google initialization"
+      ]
+    },
+    "com.android.captiveportallogin": {
+      "label": "Captive portal login",
+      "purpose": "Network login interface.",
+      "protected": true,
+      "features": [
+        "Captive portal login"
+      ]
+    },
+    "com.android.hotspot2.osulogin": {
+      "label": "Passpoint login",
+      "purpose": "Passpoint network login.",
+      "protected": true,
+      "features": [
+        "Passpoint login"
+      ]
+    },
+    "com.android.certinstaller": {
+      "label": "Certificate installer",
+      "purpose": "Certificate installation.",
+      "protected": true,
+      "features": [
+        "Certificate installer"
+      ]
+    },
+    "com.android.dynsystem": {
+      "label": "Dynamic system installer",
+      "purpose": "Android system installation support.",
+      "protected": true,
+      "features": [
+        "Dynamic system installer"
+      ]
+    },
+    "com.google.android.packageinstaller": {
+      "label": "Package installer",
+      "purpose": "Application package installation.",
+      "protected": true,
+      "features": [
+        "Package installer"
+      ]
+    },
+    "com.android.shell": {
+      "label": "ADB shell",
+      "purpose": "System administration interface.",
+      "protected": true,
+      "features": [
+        "ADB shell"
+      ]
+    },
+    "com.android.systemui": {
+      "label": "System UI",
+      "purpose": "System controls and notifications.",
+      "protected": true,
+      "features": [
+        "System UI"
+      ]
+    },
+    "com.google.android.modulemetadata": {
+      "label": "Module metadata",
+      "purpose": "Android module information.",
+      "protected": true,
+      "features": [
+        "Module metadata"
+      ]
+    },
+    "com.android.networkstack.permissionconfig": {
+      "label": "Network permissions",
+      "purpose": "System network permission configuration.",
+      "protected": true,
+      "features": [
+        "Network permissions"
+      ]
+    },
+    "com.android.networkstack.inprocess": {
+      "label": "Android network stack",
+      "purpose": "Core networking.",
+      "protected": true,
+      "features": [
+        "Android network stack"
+      ]
+    },
+    "com.android.providers.calendar": {
+      "label": "Calendar provider",
+      "purpose": "Shared calendar data.",
+      "protected": true,
+      "features": [
+        "Calendar provider"
+      ]
+    },
+    "com.android.providers.contacts": {
+      "label": "Contacts provider",
+      "purpose": "Shared contact data.",
+      "protected": true,
+      "features": [
+        "Contacts provider"
+      ]
+    },
+    "com.android.providers.media.module": {
+      "label": "Media provider",
+      "purpose": "Media storage and access.",
+      "protected": true,
+      "features": [
+        "Media provider"
+      ]
+    },
+    "com.android.providers.media": {
+      "label": "Legacy media provider",
+      "purpose": "Media storage and access.",
+      "protected": true,
+      "features": [
+        "Legacy media provider"
+      ]
+    },
+    "com.android.cts.priv.ctsshim": {
+      "label": "Privileged CTS shim",
+      "purpose": "Android compatibility test components; review dependencies.",
+      "protected": false,
+      "features": [
+        "Privileged CTS shim"
+      ]
+    },
+    "com.android.cts.ctsshim": {
+      "label": "CTS shim",
+      "purpose": "Android compatibility test components; review dependencies.",
+      "protected": false,
+      "features": [
+        "CTS shim"
+      ]
+    },
+    "com.android.connectivity.resources": {
+      "label": "Connectivity resources",
+      "purpose": "Network configuration resources.",
+      "protected": true,
+      "features": [
+        "Connectivity resources"
+      ]
+    },
+    "com.android.wifi.resources": {
+      "label": "Wi-Fi resources",
+      "purpose": "Wi-Fi configuration resources.",
+      "protected": true,
+      "features": [
+        "Wi-Fi resources"
+      ]
+    },
+    "com.tvos": {
+      "label": "TV framework resources",
+      "purpose": "Vendor TV framework resources.",
+      "protected": true,
+      "features": [
+        "TV framework resources"
+      ]
+    },
+    "android": {
+      "label": "Android framework",
+      "purpose": "Core Android resources and permissions.",
+      "protected": true,
+      "features": [
+        "Android framework"
+      ]
+    },
+    "com.android.soundpicker": {
+      "label": "Sound picker",
+      "purpose": "System sound selection.",
+      "protected": true,
+      "features": [
+        "Sound picker"
+      ]
+    },
+    "com.android.providers.downloads": {
+      "label": "Download service",
+      "purpose": "Application and system downloads.",
+      "protected": true,
+      "features": [
+        "Download service"
+      ]
+    },
+    "com.android.se": {
+      "label": "Secure element service",
+      "purpose": "Secure element integration.",
+      "protected": true,
+      "features": [
+        "Secure element service"
+      ]
+    },
+    "com.android.location.fused": {
+      "label": "Fused location",
+      "purpose": "System location integration.",
+      "protected": true,
+      "features": [
+        "Fused location"
+      ]
+    },
+    "com.tcl.systemserver": {
+      "label": "TCL system services",
+      "purpose": "Core vendor system services.",
+      "protected": true,
+      "features": [
+        "TCL system services"
+      ]
+    },
+    "com.android.networkstack.tethering.inprocess": {
+      "label": "Tethering services",
+      "purpose": "Shared connectivity services.",
+      "protected": true,
+      "features": [
+        "Tethering services"
+      ]
+    },
+    "com.google.android.ext.services": {
+      "label": "Extended Android services",
+      "purpose": "Android service integration.",
+      "protected": true,
+      "features": [
+        "Extended Android services"
+      ]
+    },
+    "com.android.localtransport": {
+      "label": "Local backup transport",
+      "purpose": "Local backup support.",
+      "protected": true,
+      "features": [
+        "Local backup transport"
+      ]
+    },
+    "com.tcl.ttvs": {
+      "label": "TCL TTVS Core",
+      "purpose": "Mixed core service: updates, casting, device services and reporting code. Keep enabled.",
+      "protected": true,
+      "features": [
+        "TCL TTVS Core"
+      ]
+    },
+    "com.android.statementservice": {
+      "label": "App link verification",
+      "purpose": "Application and website link verification.",
+      "protected": true,
+      "features": [
+        "App link verification"
+      ]
+    },
+    "com.antena3.atresplayer.tv": {
+      "label": "Atresplayer",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Atresplayer"
+      ]
+    },
+    "com.disney.disneyplus": {
+      "label": "Disney+",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Disney+"
+      ]
+    },
+    "com.netflix.tokenmanager": {
+      "label": "Netflix vendor integration",
+      "purpose": "Netflix vendor authorization integration.",
+      "protected": true,
+      "features": [
+        "Netflix vendor integration"
+      ]
+    },
+    "com.google.android.videos": {
+      "label": "Google TV films",
+      "purpose": "Optional film and television library application.",
+      "protected": false,
+      "features": [
+        "Google TV films"
+      ]
+    },
+    "com.wbd.stream": {
+      "label": "Max / HBO Max",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Max / HBO Max"
+      ]
+    },
+    "com.movistarplus.androidtv": {
+      "label": "Movistar Plus+",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Movistar Plus+"
+      ]
+    },
+    "com.netflix.ninja": {
+      "label": "Netflix",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Netflix"
+      ]
+    },
+    "com.amazon.amazonvideo.livingroom": {
+      "label": "Prime Video",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "Prime Video"
+      ]
+    },
+    "com.rtve.androidtv": {
+      "label": "RTVE Play",
+      "purpose": "Optional streaming application.",
+      "protected": false,
+      "features": [
+        "RTVE Play"
+      ]
+    },
+    "com.spotify.tv.android": {
+      "label": "Spotify",
+      "purpose": "Optional music application.",
+      "protected": false,
+      "features": [
+        "Spotify"
+      ]
+    },
+    "com.google.android.youtube.tv": {
+      "label": "YouTube",
+      "purpose": "Optional video application.",
+      "protected": false,
+      "features": [
+        "YouTube"
+      ]
+    },
+    "com.google.android.youtube.tvmusic": {
+      "label": "YouTube Music",
+      "purpose": "Optional music application.",
+      "protected": false,
+      "features": [
+        "YouTube Music"
+      ]
+    },
+    "com.tcl.tvinput": {
+      "label": "TCL TV inputs",
+      "purpose": "Television input and tuner integration.",
+      "protected": true,
+      "features": [
+        "TCL TV inputs"
+      ]
+    },
+    "com.tcl.tv": {
+      "label": "TCL live television",
+      "purpose": "Broadcast television interface.",
+      "protected": true,
+      "features": [
+        "TCL live television"
+      ]
+    },
+    "com.google.android.inputmethod.latin": {
+      "label": "Gboard",
+      "purpose": "Keyboard and text input.",
+      "protected": true,
+      "features": [
+        "Gboard"
+      ]
+    },
+    "com.tcl.inputmethod.international": {
+      "label": "TCL keyboard",
+      "purpose": "Vendor text input; confirm another working keyboard before any change.",
+      "protected": false,
+      "features": [
+        "TCL keyboard"
+      ]
+    }
+  }
+}

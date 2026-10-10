@@ -1,0 +1,13 @@
+{
+  "normalized_result": {
+    "package_name": "com.example.optional",
+    "version_code": "7",
+    "version_name": "1.0",
+    "permissions": [
+      "android.permission.INTERNET"
+    ],
+    "manifest": {
+      "status": "complete"
+    }
+  }
+}
