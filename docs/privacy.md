@@ -1,6 +1,6 @@
 # Reduce tracking
 
-After scanning, the browser offers two individually selected TCL reporting controls alongside the existing package choices. Neither is selected automatically. The program previews and journals them before applying changes. It does not claim to remove all tracking, logs, cookies or queued reports.
+After scanning, **Reduce TCL tracking now** reads a fresh inventory and applies the supported TCL BI and diagnostic flags that need changing, then verifies their values. It creates and saves the recovery plan automatically and changes no packages. Individually selected controls remain available alongside package choices; those selections use the existing preview and apply flow. It does not claim to remove all tracking, logs, cookies or queued reports.
 
 Automatic changes are available only for the reviewed TCL Android 12 firmware and exact versions of the relevant TCL applications. Other TVs can be scanned, but these switches remain unavailable until their behavior is reviewed. Core TTVS remains enabled because it also provides device services, updates and casting.
 
@@ -9,7 +9,9 @@ Automatic changes are available only for the reviewed TCL Android 12 firmware an
 | TCL BI reporting | Global `gdpr_user_action` → `0` | Sets the supported TCL BI consent flag to off. An absent key is not treated as off. |
 | TCL diagnostics | Global `tcl_diagnostic_status` → `0` | Sets the supported TCL diagnostic consent flag to off. |
 
-Changing these flags is not proof that every service stops sending data. Other reporting paths, Firebase, cached data and firmware variations are outside that conclusion. A value of `0` is shown as already off; an absent key is shown as not set, rather than off. Unexpected values and read failures block automatic changes.
+Changing these flags is not proof that every service stops sending data. Other reporting paths, Firebase, cached data and firmware variations are outside that conclusion.
+
+A value of `0` is shown as already off; an absent key is shown as not set, rather than off. Unexpected values and read failures block automatic changes.
 
 The scan retains only these two settings, not a dump of all device settings. Execution verifies the hardware, firmware, active user, owner application versions and current settings before any change. It rechecks each setting immediately before writing and verifies the result. Failed or interrupted commands retain a recovery journal.
 

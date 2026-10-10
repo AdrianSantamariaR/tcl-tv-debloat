@@ -5,6 +5,7 @@ CONTROLS={
     'tcl_bi_reporting':{
         'key':'gdpr_user_action','label':'TCL BI reporting',
         'purpose':'Close the reviewed TCL BI SDK consent gate.',
+        'scope_note':'This setting covers the reviewed BI SDK. Other TCL reporting paths, messages, Google/apps and queued reports are not verified by this control.',
         'reason':'The reviewed SDK defaults to allowing reporting when this flag is absent. Its GDPR interceptor blocks its reporting path when the flag is 0.',
         'features':['TCL BI usage reporting; other senders and queued data are not covered'],
         'owners':['com.tcl.ttvs'],
@@ -12,6 +13,7 @@ CONTROLS={
     'tcl_diagnostics':{
         'key':'tcl_diagnostic_status','label':'TCL diagnostics',
         'purpose':'Disable the reviewed TCL diagnostic consent flag.',
+        'scope_note':'This setting covers the reviewed diagnostic collector. It does not switch off all device logging or other applications\' reporting.',
         'reason':'The TCL consent API writes this flag and the reviewed TTVS diagnostic collector checks consent before starting. This does not cover every log or Google sender.',
         'features':['TCL diagnostic collection in the reviewed path'],
         'owners':['com.tcl.ttvs','com.tcl.useragreement'],
@@ -55,11 +57,19 @@ def snapshot(adb,serial,device,packages,catalog):
     for ident,definition in CONTROLS.items():
         versions=reviewed_owners(ident,device,packages,catalog)
         value=flags.get(definition['key']);valid=not diagnostic and value in (None,'0','1')
-        result.append({**copy.deepcopy(definition),'control_id':ident,'namespace':'global','target_value':'0',
+        item={**copy.deepcopy(definition),'control_id':ident,'namespace':'global','target_value':'0',
             'current_value':value,'read_status':'complete' if valid else 'failed',
             'diagnostic':diagnostic or ('' if valid else 'Unrecognized setting value; leave unchanged.'),
             'eligible':versions is not None and valid,'owner_versions':versions or {},
-            'guidance_level':'exact_firmware' if versions is not None else 'unknown','verification':'observed' if versions is not None else 'unreviewed'})
+            'guidance_level':'exact_firmware' if versions is not None else 'unknown','verification':'observed' if versions is not None else 'unreviewed'}
+        if ident=='tcl_bi_reporting' and versions is not None:
+            for profile in catalog.get('profiles',[]):
+                if ident not in profile.get('privacy_controls',[]):continue
+                if not all(device.get(k)==profile.get(k) for k in ('manufacturer','product','fingerprint')):continue
+                if any(any(profile.get('rules',{}).get(owner,{}).get(k)!=v for k,v in version.items()) for owner,version in versions.items()):continue
+                item['related_paths']=copy.deepcopy(profile.get('reporting_paths',[]))
+                break
+        result.append(item)
     return result
 
 

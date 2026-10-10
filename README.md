@@ -2,7 +2,7 @@
 
 Review what's installed on your Google TV, turn off the apps you don't use, and keep a record you can undo later.
 
-TCL TV Debloat runs on your computer. It opens a local browser with a package inventory, plain-English descriptions, permissions, and a preview of your changes. Nothing is selected for removal. You choose what to disable, and the tool saves each package's original state before changing it.
+TCL TV Debloat runs on your computer. After scanning, you can reduce supported TCL tracking with one click, or select suggested optional apps based on the functions you want to keep. Package changes still have a review step. The tool saves original states and setting values for recovery.
 
 Prefer to have your coding agent handle the work? [Copy the agent prompt](docs/agent-guide.md#copy-this-prompt). It covers setup, scanning, recommendations, your approval, and recovery.
 
@@ -42,12 +42,18 @@ See [setup and connection](docs/setup.md) if ADB isn't available or your TV need
 1. Connect to your TV and approve this computer on the TV's debugging prompt.
 2. Run a standard scan. Optional deep analysis is explained in the wizard.
 3. Search the inventory and read the details for apps you don't want.
-4. Select individual packages and optional **Reduce tracking** controls, review the preview, and apply it.
+4. Use **Reduce TCL tracking now** for supported reporting controls, or choose what to keep and click **Select suggested apps**. Review the suggested package changes and apply them together. Individual selections remain available.
 5. To undo, choose the saved apply journal and preview its restoration.
 
-Keep the smart features you use: streaming, casting, voice control, accessibility, or all of them. The feature checkboxes help explain consequences; they don't select packages for you. Protected and unresolved packages can't be disabled.
+Keep the smart features you use: streaming, casting, voice control, accessibility, or all of them. Use the feature checkboxes with **Select suggested apps** to keep those functions while selecting reviewed extras. Protected and unresolved packages can't be disabled.
 
 The [Reduce tracking controls](docs/privacy.md) can close two reviewed TCL reporting flags without disabling core TTVS. They save and restore the exact original setting, including an originally absent key. Google and HbbTV controls have manual guidance.
+
+The privacy panel explains each control's scope. On matching reviewed versions it also describes independent TCL BI, messaging and component-update paths. A flag at 0 is a recorded setting value, not proof that all network reporting stopped.
+
+**Reduce TCL tracking now** performs a fresh scan, selects supported BI/diagnostic flags that need changing, creates a saved plan, applies it and verifies each value, then refreshes the inventory so you can continue with app suggestions. Already-off flags are skipped. It changes no packages and does not stop every reporting path. **Select suggested apps** covers known optional extras plus functions you uncheck; streaming, casting, voice and accessibility stay by default. Unknown, protected, already-disabled and unclassified optional functions are not suggested. Suggestions update with your preferences until you edit a package manually.
+
+After applying changes, **Results and checks** shows automatic setting/package verification from the saved apply journal. Optional picture, sound and feature checks can be expanded to record playback, HDMI, casting and other observations. You can also open a saved apply journal with **View** to record them later. Manual results start at **Not tested** and stay with that journal within the current browser tab. **Download checks report** saves a private JSON report with the journal reference, device, recorded changes and your observations. Download before closing; the app does not reload these reports or measure network traffic. Keep the source journal separately for restoration.
 
 Package changes use Android's `disable-user` operation for user 0. They don't uninstall apps, erase their data, change permissions, root the TV, or flash firmware. [How apply and recovery work](docs/recovery.md) explains the saved states and what happens if a command is interrupted.
 

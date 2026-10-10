@@ -1,6 +1,6 @@
 # TCL TV Debloat guide
 
-Start with a scan, decide which apps you need, and preview the changes before applying them. Everything runs on your computer; this documentation site doesn't connect to your TV.
+Start with a scan. Reduce supported TCL tracking with one click, or choose what to keep and let the app suggest optional packages. Review package changes before applying them. Everything runs on your computer; this documentation site doesn't connect to your TV.
 
 - [Install the app and connect your TV](setup.md)
 - [Have your coding agent handle the work](agent-guide.md)

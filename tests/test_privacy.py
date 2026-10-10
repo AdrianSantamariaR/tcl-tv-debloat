@@ -33,6 +33,21 @@ class PrivacyTests(unittest.TestCase):
         inv=self.scan();self.assertEqual(len(inv['privacy_controls']),2)
         self.assertTrue(all(c['eligible'] and c['current_value'] is None for c in inv['privacy_controls']))
         self.assertEqual(build_plan(inv,{ }).get('setting_changes',[]),[]);self.assertEqual(self.writes(),[])
+    def test_reporting_path_findings_require_matching_firmware_and_owner(self):
+        # Catches attaching findings from another version/firmware to a live scan.
+        paths=[{'id':'fixture-messages','label':'Fixture messages','owner':'com.tcl.ttvs','summary':'Independent sender; network behavior unverified.'}]
+        self.catalog['profiles'][0]['reporting_paths']=paths
+        change_state(self.state,settings={'gdpr_user_action':'0'})
+        inv=self.scan()
+        self.assertEqual(inv['privacy_controls'][0].get('related_paths'),paths)
+        original=self.state.read_text()
+        for case in ['owner','firmware']:
+            d=json.loads(original)
+            if case=='owner':d['packages']['com.tcl.ttvs']['version_code']=8
+            else:d['props']['ro.build.fingerprint']='unreviewed/build'
+            self.state.write_text(json.dumps(d))
+            self.assertFalse(self.scan()['privacy_controls'][0].get('related_paths'))
+        self.assertEqual(self.writes(),[])
     def test_restore_exact_values_and_absence_without_replay(self):
         for original in [None,'1','0']:
             change_state(self.state,settings={} if original is None else {k:original for k in KEYS})

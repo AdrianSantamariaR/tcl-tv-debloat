@@ -16,8 +16,9 @@ function snapshot(controls) {
 }
 const settingChange = { control_id:'tcl_bi_reporting', label:'TCL BI statistics', namespace:'global', key:'tcl_bi_reporting', before:null, after:'0', purpose:'Optional reporting', reason:'Observed on firmware', features:['Reporting'], verification:'observed', guidance_level:'exact_firmware', evidence:[], action:'reduce_tracking', outcome:'pending', diagnostic:'', owner_versions:{} };
 function preview(changes = [], setting_changes = []) { return {id:'plan-one',mode:'apply',status:'preview',device:{serial:'simulated-tv'},identity_assurance:'exact identity',created_at:'2026-10-10T10:01:00',changes,setting_changes}; }
-async function openApp(inv, result = preview(), journals = []) {
-  const page = await browser.newPage(); const requests = []; const errors = [];
+function completedJob(result,status='complete') { return {status,result,error:null,message:'Done',stage:'complete',completed:0,total:null}; }
+async function openApp(inv, result = preview(), journals = [], flow = {}) {
+  const page = await browser.newPage(); const requests = []; const calls = []; const errors = [];
   page.setDefaultTimeout(3000);
   page.on('pageerror', e => errors.push(e.message));
   await page.route('http://privacy-ui.test/**', async route => {
@@ -27,19 +28,22 @@ async function openApp(inv, result = preview(), journals = []) {
       return route.fulfill({body:fs.readFileSync(path.join(web,name)),contentType:name.endsWith('.js') ? 'application/javascript' : name.endsWith('.css') ? 'text/css' : 'text/html'});
     }
     const name = url.pathname.slice(5); let data;
-    if (name === 'status') data = {data_dir:'/simulated'};
+    if (Object.hasOwn(flow,name)) { calls.push({operation:name,payload:request.postDataJSON()}); data = typeof flow[name] === 'function' ? flow[name]() : flow[name]; }
+    else if (name === 'status') data = {data_dir:'/simulated'};
     else if (name === 'dependencies') data = {standard_ready:true,deep_configured:false,engine_execution_verified:false,dependencies:[]};
     else if (name === 'devices') data = [{serial:'simulated-tv',state:'device'},{serial:'other-simulated-tv',state:'device'}];
-    else if (name === 'sessions') data = [inv];
+    else if (name === 'sessions') data = inv ? [inv] : [];
     else if (name === 'plans') data = journals;
     else if (name === 'preview') { requests.push(request.postDataJSON()); data = {id:'job-one'}; }
     else if (name === 'jobs/job-one') data = {id:'job-one',message:'Done',stage:'preview',completed:1,total:1,status:'complete',result};
     else throw new Error('Unexpected simulated request: ' + name);
     return route.fulfill({json:data});
   });
-  await page.goto('http://privacy-ui.test/'); await page.waitForFunction(() => document.getElementById('tv-title').textContent.includes('Simulated'));
+  await page.goto('http://privacy-ui.test/#private-test-token');
+  if (inv) await page.waitForFunction(() => document.getElementById('tv-title').textContent.includes('Simulated'));
+  else await page.locator('#history button').first().waitFor();
   await page.waitForTimeout(30);
-  return {page,requests,errors};
+  return {page,requests,calls,errors};
 }
 test('privacy controls start unchecked and absent values are not represented as off', async () => {
   // Catches automatic opt-in and treating a missing global setting as zero.
@@ -118,5 +122,158 @@ test('new scan clears the selected package and privacy control', async () => {
   assert.equal(await page.locator('#privacy-controls input:checked').count(),0);
   assert.equal(await page.locator('#action-com\\.example\\.optional').inputValue(),'keep');
   assert.equal(await page.locator('#preview').isDisabled(),true);
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('validation is available for an apply journal, never for a preview', async () => {
+  // Catches collecting results against changes that have not been attempted.
+  const {page,errors} = await openApp(snapshot([control('tcl_bi_reporting','1')]),preview([],[settingChange]));
+  await page.locator('#privacy-tcl_bi_reporting').check(); await page.locator('#preview').click();
+  await page.waitForFunction(() => !document.getElementById('preview-panel').hidden);
+  assert.equal(await page.locator('#validation-panel').isHidden(),true);
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('downloaded checks retain their source journal and never mark untested features as working', async () => {
+  // Catches exporting another TV's context, credentials, or an invented pass.
+  const inv=snapshot([control('tcl_bi_reporting','1')]);
+  const journal={...preview([],[{...settingChange,outcome:'successful'}]),id:'apply-one',inventory_id:inv.id,status:'complete',device:{...inv.device},started_at:'2026-10-10T10:01:01',finished_at:'2026-10-10T10:01:02'};
+  const {page,errors}=await openApp(inv,preview(),[journal]);
+  await page.locator('#history button').click();
+  await page.locator('#manual-checks summary').click();
+  await page.locator('#validation-streaming').selectOption('working');
+  await page.locator('#validation-hdmi').selectOption('problem');
+  await page.locator('#validation-notes').fill('No sound on HDMI');
+  const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
+  const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
+  assert.equal(report.source_apply_journal_id,'apply-one');
+  assert.equal(report.baseline_inventory.id,'inventory-one');
+  assert.equal(report.baseline_inventory.device.fingerprint,'test/build');
+  assert.equal(report.checks.streaming.result,'working');
+  assert.equal(report.checks.hdmi.result,'problem');
+  assert.equal(report.checks.casting.result,'untested');
+  assert.equal(report.network_verification,'not_performed');
+  assert.equal(report.notes,'No sound on HDMI');
+  assert.equal(JSON.stringify(report).includes('private-test-token'),false);
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('functional results stay with their journal when reviewing another TV', async () => {
+  // Catches carrying a good playback result over to another TV/journal.
+  const inv=snapshot([control('tcl_bi_reporting','1')]);
+  const first={...preview([],[{...settingChange,outcome:'successful'}]),id:'apply-one',inventory_id:inv.id,status:'complete',device:{...inv.device}};
+  const second={...first,id:'apply-two',inventory_id:'other-inventory',device:{...inv.device,serial:'other-simulated-tv',fingerprint:'other/build'}};
+  const {page,errors}=await openApp(inv,preview(),[first,second]);
+  await page.locator('#history button').nth(0).click();
+  await page.locator('#manual-checks summary').click();
+  await page.locator('#validation-streaming').selectOption('working');
+  await page.locator('#history button').nth(1).click();
+  assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
+  const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
+  const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
+  assert.equal(report.source_apply_journal_id,'apply-two');
+  assert.equal(report.device.serial,'other-simulated-tv');
+  assert.equal(report.baseline_inventory,null);
+  await page.locator('#history button').nth(0).click();
+  assert.equal(await page.locator('#validation-streaming').inputValue(),'working');
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('a saved journal remains usable when its original inventory is unavailable', async () => {
+  // Catches failing to open older saved changes, or inventing a missing baseline.
+  const journal={...preview([],[{...settingChange,outcome:'successful'}]),status:'complete'};
+  const {page,errors}=await openApp(null,preview(),[journal]);
+  await page.locator('#history button').click();
+  await page.locator('#manual-checks summary').click();
+  assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
+  const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
+  const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
+  assert.equal(report.source_apply_journal_id,journal.id);
+  assert.equal(report.baseline_inventory,null);
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('one-click privacy uses a fresh scan and applies only supported flags', async () => {
+  // Catches changing apps or trusting obsolete flag values in the shortcut.
+  const old=snapshot([control('tcl_bi_reporting','1'),control('tcl_diagnostics','1')]);
+  const fresh={...snapshot([control('tcl_bi_reporting',null),control('tcl_diagnostics','0')]),id:'fresh-inventory'};
+  const plan={...preview([],[settingChange]),inventory_id:fresh.id,device:{...fresh.device}};
+  const applied={...plan,status:'complete',setting_changes:[{...settingChange,outcome:'successful'}]};
+  const after={...fresh,id:'after-inventory',captured_at:'2026-10-10T10:02:00',privacy_controls:[control('tcl_bi_reporting','0'),control('tcl_diagnostics','0')]};
+  let scans=0;
+  const flow={scan:() => ({id:++scans===1 ? 'scan-job' : 'after-job'}),'jobs/scan-job':completedJob(fresh),'jobs/after-job':completedJob(after),preview:{id:'preview-job'},'jobs/preview-job':completedJob(plan),apply:{id:'apply-job'},'jobs/apply-job':completedJob(applied)};
+  const {page,calls,errors}=await openApp(old,preview(),[],flow);
+  await page.locator('#action-com\\.example\\.optional').selectOption('disable');
+  await page.locator('#quick-privacy').click();
+  await page.waitForFunction(() => document.getElementById('quick-privacy-status').textContent.includes('verified'));
+  assert.deepEqual(calls.filter(c => ['scan','preview','apply'].includes(c.operation)),[
+    {operation:'scan',payload:{serial:'simulated-tv',deep:false}},
+    {operation:'preview',payload:{inventory_id:'fresh-inventory',selection:{},privacy_selection:['tcl_bi_reporting']}},
+    {operation:'apply',payload:{plan_id:'plan-one'}},
+    {operation:'scan',payload:{serial:'simulated-tv',deep:false}}
+  ]);
+  assert.equal(await page.locator('#suggest-apps').isDisabled(),false);
+  assert.match(await page.locator('#automatic-checks').innerText(),/1.*verified/i);
+  assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('one-click privacy never applies when flags are off, unavailable or identity changed', async () => {
+  // Catches creating writes without supported targets or to a different TV.
+  for (const kind of ['off','unsupported','different-tv','cancelled']) {
+    const fresh=snapshot([control('tcl_bi_reporting','0'),control('tcl_diagnostics','0')]);
+    if (kind==='unsupported') fresh.privacy_controls=[control('tcl_bi_reporting','1',{eligible:false})];
+    if (kind==='different-tv') {fresh.device.serial='other-tv';fresh.privacy_controls=[control('tcl_bi_reporting','1')];}
+    if (kind==='cancelled') {fresh.status='cancelled';fresh.privacy_controls=[control('tcl_bi_reporting','1')];}
+    const flow={scan:{id:'scan-job'},'jobs/scan-job':completedJob(fresh,kind==='cancelled' ? 'cancelled' : 'complete')};
+    const {page,calls,errors}=await openApp(snapshot([control('tcl_bi_reporting','1')]),preview(),[],flow);
+    await page.locator('#quick-privacy').click();
+    await page.waitForFunction(() => !document.getElementById('quick-privacy').disabled);
+    assert.deepEqual(calls.filter(c => ['preview','apply'].includes(c.operation)),[]);
+    assert.equal(await page.locator('#error').isHidden(),true);
+    assert.deepEqual(errors,[]); await page.close();
+  }
+});
+
+test('suggested apps preserve wanted functions and never select unknown or protected packages', async () => {
+  // Catches indiscriminate bulk disabling and preferences that only show advice.
+  const inv=snapshot([]);
+  inv.packages=[
+    {...packageRecord,package:'com.tcl.repairguide'},
+    {...packageRecord,package:'com.netflix.ninja'},
+    {...packageRecord,package:'com.tcl.smartalexa'},
+    {...packageRecord,package:'com.tcl.hearaid'},
+    {...packageRecord,package:'com.tcl.magiconnectfree'},
+    {...packageRecord,package:'com.tcl.logkit',category:'protected',disable_eligible:false},
+    {...packageRecord,package:'unknown.app',category:'unknown',disable_eligible:false},
+    {...packageRecord,package:'com.tcl.usercenter'},
+    {...packageRecord,package:'com.google.android.feedback',enabled_state:3}
+  ];
+  const {page,requests,errors}=await openApp(inv);
+  await page.locator('#suggest-apps').click();
+  await page.locator('#preview').click();
+  await page.waitForFunction(() => !document.getElementById('preview-panel').hidden);
+  assert.deepEqual(requests[0],{inventory_id:'inventory-one',selection:{'com.tcl.repairguide':'disable'}});
+  await page.locator('#feature-preferences input[value=streaming]').uncheck();
+  await page.locator('#feature-preferences input[value=voice]').uncheck();
+  await page.locator('#preview').click();
+  await page.waitForFunction(() => !document.getElementById('preview-panel').hidden);
+  assert.deepEqual(requests[1],{inventory_id:'inventory-one',selection:{'com.tcl.repairguide':'disable','com.netflix.ninja':'disable','com.tcl.smartalexa':'disable'}});
+  assert.deepEqual(errors,[]); await page.close();
+});
+
+test('automatic state verification never treats uncertain or pending changes as a pass', async () => {
+  // Catches presenting a failed apply as a successful automatic check.
+  const journal={...preview([{package:'com.example.optional',before:0,after:3,outcome:'uncertain'}],[{...settingChange,outcome:'pending'}]),status:'failed'};
+  const {page,errors}=await openApp(snapshot([]),preview(),[journal]);
+  await page.locator('#history button').click();
+  assert.match(await page.locator('#automatic-checks').innerText(),/0.*verified/i);
+  assert.match(await page.locator('#automatic-checks').innerText(),/1.*uncertain/i);
+  assert.match(await page.locator('#automatic-checks').innerText(),/1.*not completed/i);
+  const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
+  const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
+  assert.equal(report.automatic_checks[0].result,'uncertain');
+  assert.equal(report.automatic_checks[1].result,'not_completed');
+  assert.equal(report.checks.streaming.result,'untested');
   assert.deepEqual(errors,[]); await page.close();
 });

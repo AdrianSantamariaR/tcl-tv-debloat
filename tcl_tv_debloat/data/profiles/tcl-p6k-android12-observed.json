@@ -1642,5 +1642,31 @@
   "privacy_controls": [
     "tcl_bi_reporting",
     "tcl_diagnostics"
+  ],
+  "reporting_paths": [
+    {
+      "id": "tcl_bi_service",
+      "label": "Other TCL BI reports",
+      "owner": "com.tcl.ttvs",
+      "summary": "A separate BIService implementation has a different consent mechanism. Closing the reviewed SDK gate does not establish that this path stopped. Its active reporter remains unverified.",
+      "feature_impact": "No additional control confirmed.",
+      "evidence_level": "static_code"
+    },
+    {
+      "id": "tcl_messages",
+      "label": "TCL messages",
+      "owner": "com.tcl.ttvs",
+      "summary": "TTVS embeds MessageService in addition to the standalone messagebox app. Turning off messagebox alone does not establish that the embedded sender stopped.",
+      "feature_impact": "Keep protected: closing this service could affect messages and update notices.",
+      "evidence_level": "static_code"
+    },
+    {
+      "id": "tcl_component_updates",
+      "label": "TCL component updates",
+      "owner": "com.tcl.ttvs",
+      "summary": "The TDP path queries system component updates. A connection to this vendor service does not by itself identify telemetry.",
+      "feature_impact": "Keep protected: blocking it could affect component updates.",
+      "evidence_level": "static_code"
+    }
   ]
 }

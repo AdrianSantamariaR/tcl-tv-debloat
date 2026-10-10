@@ -7,7 +7,7 @@ from .rea import check_prerequisites
 from .store import identifier
 
 MAX_BODY=1024*1024
-ASSETS={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/style.css':'style.css'}
+ASSETS={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/validation.js':'validation.js','/style.css':'style.css'}
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
