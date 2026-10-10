@@ -79,6 +79,8 @@ tcl-tv-debloat analyze --inventory inventory.json --out inventory-deep.json
 
 Use `inventory-deep.json` for the subsequent preview if that command returned a usable inventory. REA configuration checks don't establish that its engine can run; inspect the returned coverage and diagnostics. See [deep analysis](deep-analysis.md) for the prerequisites.
 
+Optional [Reduce tracking controls](privacy.md) are selected separately with `--privacy tcl_bi_reporting tcl_diagnostics`; include only the controls the owner chose. They change device-wide TCL reporting flags and restore the exact original value or absence. Leave Google/HbbTV steps manual and do not promise all tracking has stopped.
+
 Create `selection.json` containing only approved candidates. Its format is a JSON object, for example `{"com.tcl.channelplus": "disable"}`. An example package name is not a recommendation for every TV.
 
 ```sh

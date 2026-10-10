@@ -13,13 +13,14 @@ class Application:
         self._operation_lock=threading.Lock();self._jobs_lock=threading.Lock();self._jobs={};self._cancel={}
     def _validate(self,operation,payload):
         if operation not in PAYLOADS or not isinstance(payload,dict):raise ValueError('Unknown operation or invalid payload.')
-        optional={'packages'} if operation=='restore_preview' else set()
+        optional={'packages'} if operation=='restore_preview' else ({'privacy_selection'} if operation=='preview' else set())
         if not PAYLOADS[operation].issubset(payload) or not set(payload).issubset(PAYLOADS[operation]|optional):raise ValueError('Invalid operation fields.')
         for k,v in payload.items():
             if k.endswith('_id'):identifier(v)
             elif k in ('address','code','serial') and not isinstance(v,str):raise ValueError('Expected a text value.')
         if operation=='scan' and type(payload['deep']) is not bool:raise ValueError('Deep analysis must be true or false.')
         if operation=='preview' and not isinstance(payload['selection'],dict):raise ValueError('Invalid selection.')
+        if 'privacy_selection' in payload and (not isinstance(payload['privacy_selection'],list) or any(not isinstance(x,str) for x in payload['privacy_selection'])):raise ValueError('Invalid privacy selection.')
         if 'packages' in payload and (not isinstance(payload['packages'],list) or any(not isinstance(x,str) for x in payload['packages'])):raise ValueError('Invalid package list.')
     def _dispatch(self,operation,payload,*,on_progress=None,cancel=None):
         self._validate(operation,payload)
@@ -31,7 +32,7 @@ class Application:
             return inv
         if operation=='analyze':return analyze_inventory(self.adb,self.rea,self.store,self.store.load('sessions',payload['inventory_id']),on_progress=on_progress,cancel=cancel)
         if operation=='preview':
-            p=build_plan(self.store.load('sessions',payload['inventory_id']),payload['selection']);self.store.save('plans',p);return p
+            p=build_plan(self.store.load('sessions',payload['inventory_id']),payload['selection'],privacy_selection=payload.get('privacy_selection'));self.store.save('plans',p);return p
         if operation=='restore_preview':
             p=build_restore_plan(self.store.load('sessions',payload['inventory_id']),self.store.load('plans',payload['source_plan_id']),payload.get('packages'));self.store.save('plans',p);return p
         p=self.store.load('plans',payload['plan_id'])

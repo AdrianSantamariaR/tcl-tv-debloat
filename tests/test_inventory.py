@@ -34,3 +34,12 @@ class InventoryTests(unittest.TestCase):
         text='Package [com.example.optional]:\n userId=10100\n versionCode=7\n versionName=1.0\n install permissions:\n  android.permission.INTERNET: granted=true\n User 0: enabled=0\n  runtime permissions:\n   android.permission.CAMERA: granted=false\n User 10: enabled=1\n   android.permission.CAMERA: granted=true\n Package [other.app]:\n  android.permission.RECORD_AUDIO: granted=true\n'
         p=parse_package('com.example.optional',text)
         self.assertEqual(p['granted_permissions'],['android.permission.INTERNET'])
+
+    def test_updated_system_app_uses_installed_package_not_factory_copy(self):
+        text='Packages:\n Package [com.example.optional]:\n  userId=10100\n  versionCode=8\n  versionName=2.0\n  User 0: installed=true enabled=3\n   android.permission.CAMERA: granted=true\nHidden system packages:\n Package [com.example.optional]:\n  userId=10100\n  versionCode=7\n  versionName=1.0\n  User 0: installed=true enabled=0\n   android.permission.RECORD_AUDIO: granted=true\n'
+        p=parse_package('com.example.optional',text)
+        self.assertEqual((p['version_code'],p['version_name'],p['enabled_state']),(8,'2.0',3))
+        self.assertEqual(p['granted_permissions'],['android.permission.CAMERA'])
+        # The factory version's reviewed rule must not authorize the updated APK.
+        inv=scan(self.adb,'fixture-tv',self.catalog)
+        self.assertFalse(match_guidance(p,inv['device'],self.catalog)['disable_eligible'])

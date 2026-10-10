@@ -42,6 +42,21 @@ class ReaTests(unittest.TestCase):
         with self.assertRaises(ValueError):node_compatible('26.0.0','~26')
         rea=Rea(env={'PATH':'','JAVA_HOME':'/missing-jdk','REA_JADX_MCP_JAR':'/missing.jar','REA_CLI_PATH':'/missing.mjs'})
         self.assertFalse(check_prerequisites(self.adb,rea)['deep_configured'])
+    def test_unconfigured_optional_tools_do_not_report_missing_or_block_standard(self):
+        rea=Rea(env={'PATH':'','JAVA_HOME':'/missing-jdk','REA_CLI_PATH':'','REA_JADX_MCP_JAR':''})
+        ready=check_prerequisites(self.adb,rea)
+        self.assertTrue(ready['standard_ready'])
+        rows={d['name']:d for d in ready['dependencies']}
+        self.assertEqual(rows['Node.js + REA']['status'],'needs_configuration')
+        self.assertEqual(rows['JADX provider JAR']['status'],'needs_configuration')
+        self.assertEqual(rows['ADB']['required_for'],'standard')
+        self.assertEqual(rows['Java JDK']['required_for'],'deep')
+    def test_failed_adb_probe_does_not_claim_its_path_is_missing(self):
+        from tcl_tv_debloat.adb import Adb
+        adb=Adb([sys.executable,'-c','import sys; sys.exit(1)'])
+        ready=check_prerequisites(adb,self.rea)
+        self.assertFalse(ready['standard_ready'])
+        self.assertEqual(ready['dependencies'][0]['status'],'unavailable')
     def test_full_jdk_compiler_and_jar_checks(self):
         import zipfile
         from unittest.mock import patch

@@ -6,6 +6,8 @@ Start with a scan, decide which apps you need, and preview the changes before ap
 - [Have your coding agent handle the work](agent-guide.md)
 - [Check TV compatibility and package guidance](compatibility.md)
 - [Set up optional REA deep analysis](deep-analysis.md)
+- [Review optional TCL reporting controls and manual privacy settings](privacy.md)
 - [Apply changes, undo them, or recover an interrupted operation](recovery.md)
+- [See the product roadmap](next-steps.md)
 
 For the quickest start, follow the [README](../README.md). The browser and command line share the same saved inventories and recovery journals.

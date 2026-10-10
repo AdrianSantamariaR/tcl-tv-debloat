@@ -42,12 +42,14 @@ See [setup and connection](docs/setup.md) if ADB isn't available or your TV need
 1. Connect to your TV and approve this computer on the TV's debugging prompt.
 2. Run a standard scan. Optional deep analysis is explained in the wizard.
 3. Search the inventory and read the details for apps you don't want.
-4. Select individual packages, review the preview, and apply it.
+4. Select individual packages and optional **Reduce tracking** controls, review the preview, and apply it.
 5. To undo, choose the saved apply journal and preview its restoration.
 
 Keep the smart features you use: streaming, casting, voice control, accessibility, or all of them. The feature checkboxes help explain consequences; they don't select packages for you. Protected and unresolved packages can't be disabled.
 
-Changes use Android's `disable-user` operation for user 0. They don't uninstall apps, erase their data, change permissions, root the TV, or flash firmware. [How apply and recovery work](docs/recovery.md) explains the saved states and what happens if a command is interrupted.
+The [Reduce tracking controls](docs/privacy.md) can close two reviewed TCL reporting flags without disabling core TTVS. They save and restore the exact original setting, including an originally absent key. Google and HbbTV controls have manual guidance.
+
+Package changes use Android's `disable-user` operation for user 0. They don't uninstall apps, erase their data, change permissions, root the TV, or flash firmware. [How apply and recovery work](docs/recovery.md) explains the saved states and what happens if a command is interrupted.
 
 ## Which TVs can use it?
 
@@ -55,7 +57,7 @@ A Google TV or Android TV with an authorized ADB connection may be scanned. Whet
 
 The first profile comes from one TCL 55P6K running Android 12. Its inventory contains **142 packages**: 104 protected, 28 optional, and 10 needing review in the validation scan. This is an observed profile; it hasn't been tested through every possible removal and TV feature. Other firmware can be inventoried without inheriting these disable choices.
 
-See [compatibility and evidence](docs/compatibility.md) for supported environments and the limits of the observed profile.
+See [compatibility and evidence](docs/compatibility.md) for supported environments and the limits of the observed profile. The [roadmap](docs/next-steps.md) describes current capabilities and planned improvements.
 
 Disabling unwanted apps doesn't prove all data collection has stopped. Some essential services also contain reporting code. The tool keeps those services protected and shows what the evidence can establish.
 

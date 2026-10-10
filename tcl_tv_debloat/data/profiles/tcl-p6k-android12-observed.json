@@ -1638,5 +1638,9 @@
       "verification": "observed",
       "provenance": "Independent static audit and Android metadata; no comprehensive functional testing."
     }
-  }
+  },
+  "privacy_controls": [
+    "tcl_bi_reporting",
+    "tcl_diagnostics"
+  ]
 }

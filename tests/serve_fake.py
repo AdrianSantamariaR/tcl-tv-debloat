@@ -2,6 +2,7 @@
 import argparse,sys,tempfile,json
 from pathlib import Path
 from tests.support import fake_adb,fixture_catalog,change_state
+from tests.test_privacy import privacy_fixture
 from tests.test_rea import ConfiguredRea
 from tcl_tv_debloat.adb import Adb
 from tcl_tv_debloat.app import Application
@@ -14,6 +15,7 @@ root=Path(a.root or tempfile.mkdtemp(prefix='tcl-tv-demo-'));state=root/'state.j
 if not state.exists():adb,state=fake_adb(root,states={'com.example.optional':0,'com.example.second':0,'android':0,'unknown.app':0})
 else:adb=Adb([sys.executable,str(Path(__file__).with_name('fake_adb.py'))],env={'TV_FAKE_STATE':str(state)})
 catalog=fixture_catalog();catalog['packages']['com.example.optional']={'label':'Optional content app','purpose':'Simulated optional entertainment service.'};catalog['profiles'][0]['rules']['com.example.second']=dict(catalog['profiles'][0]['rules']['com.example.optional'])
+privacy_fixture(catalog,state)
 if a.scenario=='unknown':
  d=json.loads(state.read_text());d['props']['ro.build.fingerprint']='unknown/build';state.write_text(json.dumps(d))
 if a.scenario=='partial':change_state(state,fail_package='com.example.second')

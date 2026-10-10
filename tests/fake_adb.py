@@ -17,6 +17,18 @@ else:
     cmd = args[3:]
     if cmd[0] == 'getprop': print(state['props'].get(cmd[1], ''))
     elif cmd == ['am', 'get-current-user']: print(state.get('user', 0))
+    elif cmd[:4] == ['settings','--user','0','list']:
+        if 'settings_read_stdout' in state: print(state['settings_read_stdout']); sys.exit(0)
+        if state.get('fail_settings_read'): print('Permission denied',file=sys.stderr); sys.exit(1)
+        print('\n'.join(k+'='+v for k,v in {'device_provisioned':'1',**state.get('settings',{})}.items()))
+    elif cmd[:3] == ['settings','--user','0'] and cmd[3] in ('put','delete'):
+        if state.get('fail_settings_write'): print('Security exception',file=sys.stderr); sys.exit(1)
+        settings=state.setdefault('settings',{})
+        if cmd[3]=='delete':settings.pop(cmd[5],None)
+        else:settings[cmd[5]]=cmd[6]
+        path.write_text(json.dumps(state))
+        if state.get('lose_settings_response'): print('Transport closed',file=sys.stderr); sys.exit(1)
+        print('Setting changed')
     elif cmd[:3] == ['pm', 'list', 'packages']: print('\n'.join('package:'+p for p in state['packages']))
     elif cmd[:2] == ['pm', 'path']: print('\n'.join('package:'+p for p in state['packages'][cmd[2]].get('paths', ['/system/app/example.apk'])))
     elif cmd[:2] == ['dumpsys', 'package']:

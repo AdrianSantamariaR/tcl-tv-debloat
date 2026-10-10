@@ -30,7 +30,7 @@ def main(argv=None):
     serve=commands.add_parser('serve',help='Open the local browser wizard');serve.add_argument('--no-browser',action='store_true');serve.add_argument('--port',type=int,default=0)
     scan=commands.add_parser('scan',help='Read-only package inventory');scan.add_argument('--serial',required=True);scan.add_argument('--deep',action='store_true');scan.add_argument('--out')
     analyze=commands.add_parser('analyze',help='Add optional REA evidence');analyze.add_argument('--inventory',required=True);analyze.add_argument('--out')
-    preview=commands.add_parser('preview',help='Save a change preview');preview.add_argument('--inventory',required=True);preview.add_argument('--selection',required=True);preview.add_argument('--out')
+    preview=commands.add_parser('preview',help='Save a change preview');preview.add_argument('--inventory',required=True);preview.add_argument('--selection');preview.add_argument('--privacy',nargs='+',choices=['tcl_bi_reporting','tcl_diagnostics']);preview.add_argument('--out')
     apply=commands.add_parser('apply',help='Apply a saved preview');apply.add_argument('--plan',required=True);apply.add_argument('--yes',action='store_true');apply.add_argument('--out')
     restore=commands.add_parser('restore',help='Scan, preview and restore a saved apply journal');restore.add_argument('--journal',required=True);restore.add_argument('--yes',action='store_true');restore.add_argument('--out')
     args=parser.parse_args(argv)
@@ -43,7 +43,7 @@ def main(argv=None):
         elif command=='scan':result=app.run('scan',{'serial':args.serial,'deep':args.deep})
         elif command in ('analyze','preview'):
             inv=import_record(app,'sessions',args.inventory)
-            result=app.run(command,{'inventory_id':inv['id'],**({'selection':read_json(args.selection)} if command=='preview' else {})})
+            result=app.run(command,{'inventory_id':inv['id'],**({'selection':read_json(args.selection) if args.selection else {},'privacy_selection':args.privacy or []} if command=='preview' else {})})
         else:
             if command=='restore':
                 journal=import_record(app,'plans',args.journal)

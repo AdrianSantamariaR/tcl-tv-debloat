@@ -4,6 +4,8 @@ Deep analysis uses reverse engineering to inspect readable Android app packages 
 
 You can scan, preview, apply and restore without REA. No AI API key or coding agent is required. Ghidra is not needed for this APK Java workflow.
 
+Installing the REA plugin or MCP server in a coding agent does not configure this app. The app launches REA directly and reads the environment of the terminal that started it. Expand **Optional tools for Deep** in step 1 for its checks and configuration examples. **Needs configuration** is different from a missing installation.
+
 ## Tools you supply
 
 | Dependency | Purpose |
@@ -38,7 +40,9 @@ The application reads the installed REA package's Node engine requirement. REA 6
 
 ## Configured versus verified
 
-The wizard checks metadata, Java's compiler module and the selected JAR. **Configured** means prerequisites appear available. **Execution verified** appears only after a valid APK inspection whose artifact and engine hashes and manifest identity match the request. Configuration can succeed while the provider fails. Our live local execution failed; see [compatibility evidence](compatibility.md).
+After setting these variables, stop any running app and launch it again from this same terminal. Restarting generates a new authorized launch URL while retaining saved sessions and journals. Rechecking a running app does not import variables from another terminal.
+
+The wizard checks metadata, Java's compiler module and the selected JAR. **Configured** means prerequisites appear available. **Execution verified** appears only after a valid APK inspection whose artifact and engine hashes and manifest identity match the request. Configuration can succeed while the provider fails. See [compatibility and coverage](compatibility.md) for the limits of this analysis.
 
 Deep scanning saves the standard inventory before inspecting APKs. Each package has complete, failed or limited coverage and diagnostics. Cancellation stops the owned REA invocation; forced interruption may leave REA temporary files. Private evidence/cache stays in your data directory and binds APK hash, REA version, provider JAR hash and request.
 

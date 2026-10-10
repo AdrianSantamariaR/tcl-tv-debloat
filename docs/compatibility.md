@@ -17,7 +17,7 @@ The observed TCL profile is constrained to manufacturer `TCL`, product `G10_4K_G
 
 This is static observation, not a guarantee of correct TV behavior after every selectable change. Other firmware profiles and functional testing of tuner, HDMI, remote, audio, casting, accessibility, streaming and updates need future contributions.
 
-TTVS includes essential functionality and reporting-related code; it stays protected. Disabling Samba's UI does not prove reporting in other packages stops. Inspect TCL privacy controls manually where available; [TCL's general guide](https://support.tcl.com/en_US/us-googletv-setup-configuration/tcl-google-tv-settings-and-user-manual-guide) is not a universal tracking map.
+TTVS includes essential functionality and reporting-related code; it stays protected. Disabling Samba's UI does not prove reporting in other packages stops. The [Reduce tracking controls](privacy.md) automate only two reviewed TCL reporting flags, gated by exact firmware and owner versions. Google and HbbTV controls remain manual; [TCL's general guide](https://support.tcl.com/en_US/us-googletv-setup-configuration/tcl-google-tv-settings-and-user-manual-guide) is not a universal tracking map.
 
 ## Computers
 

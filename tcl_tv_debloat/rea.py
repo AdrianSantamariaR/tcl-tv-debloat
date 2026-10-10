@@ -30,6 +30,8 @@ class ReaError(RuntimeError):
     def __init__(self,message,observation=None):
         super().__init__(message);self.observation=observation
 
+class ConfigurationRequired(RuntimeError):pass
+
 class Rea:
     def __init__(self,command=None,env=None):
         self.env={**os.environ,**(env or {})};self.command=list(command) if command else None
@@ -38,8 +40,10 @@ class Rea:
         rows=[]
         def row(name,purpose,url,fn):
             try:version,detail=fn();status='configured'
-            except (ValueError,RuntimeError,OSError,KeyError,zipfile.BadZipFile) as e:version=None;detail=str(e);status='missing'
-            rows.append({'name':name,'purpose':purpose,'status':status,'version':version,'setup_url':url,'detail':detail})
+            except ConfigurationRequired as e:version=None;detail=str(e);status='needs_configuration'
+            except FileNotFoundError as e:version=None;detail=str(e);status='missing'
+            except (ValueError,RuntimeError,OSError,KeyError,zipfile.BadZipFile) as e:version=None;detail=str(e);status='unavailable'
+            rows.append({'name':name,'purpose':purpose,'status':status,'version':version,'setup_url':url,'detail':detail,'required_for':'deep'})
             return status=='configured',version
         node=shutil.which('node',path=self.env.get('PATH',''))
         root=None
@@ -49,7 +53,8 @@ class Rea:
             resolved=Path(binary).resolve()
             if resolved.suffix=='.mjs':root=resolved.parent.parent;cli=str(resolved)
         def rea_probe():
-            if not root or not cli or not Path(cli).is_file():raise RuntimeError('Set REA_CLI_PATH to the installed rea-agents/scripts/rea.mjs. npm command shims are not executed.')
+            if not root or not cli:raise ConfigurationRequired('REA is not configured for this app. An agent MCP installation does not configure this process. Set REA_CLI_PATH to the installed rea-agents/scripts/rea.mjs, then restart the app from that terminal.')
+            if not Path(cli).is_file():raise FileNotFoundError('REA_CLI_PATH does not point to an existing rea.mjs. Check the path and restart the app.')
             meta=json.loads((root/'package.json').read_text());v=probe([node or 'node','--version'],self.env)
             if not node_compatible(v,meta['engines']['node']):raise ValueError('Installed Node does not satisfy '+meta['engines']['node'])
             self.command=[node or 'node',cli]
@@ -65,7 +70,8 @@ class Rea:
         jar=self.env.get('REA_JADX_MCP_JAR');jar_hash=None
         def jar_probe():
             nonlocal jar_hash
-            if not jar or not Path(jar).is_file():raise RuntimeError('Set REA_JADX_MCP_JAR to the provider JAR.')
+            if not jar:raise ConfigurationRequired('No JADX provider selected for this app. Set REA_JADX_MCP_JAR to the provider JAR and restart the app from that terminal.')
+            if not Path(jar).is_file():raise FileNotFoundError('REA_JADX_MCP_JAR does not point to an existing provider JAR.')
             with zipfile.ZipFile(jar) as z:
                 names=z.namelist()
                 if not any(n.startswith('jadx/') and n.endswith('.class') for n in names):raise ValueError('JAR does not contain JADX classes.')
@@ -119,10 +125,10 @@ class Rea:
 
 def check_prerequisites(adb,rea):
     try:version=adb.version();status='configured';ready=True;detail='Ready for connection authorization.'
-    except RuntimeError as e:version=None;status='missing';ready=False;detail=str(e)
+    except RuntimeError as e:version=None;status='unavailable';ready=False;detail=str(e)
     ident=rea.identity()
     return {'standard_ready':ready,'deep_configured':ident['configured'],'engine_execution_verified':rea.execution_verified,
-            'dependencies':[{'name':'ADB','purpose':'Connects to the TV, inventories packages and applies your previewed choices.','status':status,'version':version,'setup_url':'https://developer.android.com/tools/releases/platform-tools','detail':detail}]+ident['dependencies']}
+            'dependencies':[{'name':'ADB','purpose':'Connects to the TV, inventories packages and applies your previewed choices.','status':status,'version':version,'setup_url':'https://developer.android.com/tools/releases/platform-tools','detail':detail,'required_for':'standard'}]+ident['dependencies']}
 
 def validate_evidence(evidence,sha,engine_sha=None):
     if engine_sha and evidence.get('normalized_result',{}).get('engine',{}).get('artifact_sha256')!=engine_sha:raise ValueError('REA engine hash mismatch; evidence not attributed.')

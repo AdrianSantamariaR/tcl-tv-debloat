@@ -22,3 +22,17 @@ docs/superpowers/
 .DS_Store
 .env
 .env.*
+
+# Network captures, device dumps and local application data
+*.pcap
+*.pcapng
+*.har
+*.log
+*.dex
+*.hprof
+*.dmp
+/local-data/
+/private-data/
+inventory-*.json
+plan-*.json
+journal-*.json

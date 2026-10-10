@@ -1,6 +1,6 @@
 # Apply, undo and recover
 
-Every new selection starts at **Keep as is**. Only eligible reviewed packages can be disabled, and changes affect Android user 0. A preview contains only effective changes and explains the selected package’s purpose, feature impact and evidence level. It is saved before execution. Apply checks the connected device, firmware, active user, every selected version and every selected state before sending the first command.
+Every new selection starts at **Keep as is**. Only eligible reviewed packages can be disabled; those changes affect Android user 0. Individually selected TCL reporting controls affect the whole device. A preview contains only effective changes and explains the selected package’s purpose, feature impact and evidence level. It is saved before execution. Apply checks the connected device, firmware, active user, every selected version and every selected state before sending the first command.
 
 The journal is saved durably before the command and updated after verification. If a response is lost, the outcome is **uncertain**; the device may already have changed. Execution stops. A duplicate started plan ID returns its journal and does not repeat commands.
 
@@ -28,4 +28,6 @@ Or use `tcl-tv-debloat restore --journal plan.json`. This creates a fresh previe
 
 State 0 means Android's default enabled state; restoration uses `pm default-state`, not an unconditional `pm enable`. States 1–4 also map to their exact package-manager operation. If the firmware rejects an operation, the tool reports it and stops.
 
-Journals are package-state records, not app-data backups. Preserve them across application upgrades. A failed/uncertain journal remains useful after restarting the server. The browser's new launch token changes while the saved history remains in `~/.tcl-tv-debloat/`.
+Reporting settings are also journaled when selected in **Reduce tracking**. They affect the device globally. Restoration writes the recorded original value, or deletes the key if it was originally absent. Owner application versions and current settings must match the reviewed preview; later conflicting values block recovery. See [privacy controls](privacy.md).
+
+Journals record package states and selected reporting settings, not app-data backups. Preserve them across application upgrades. A failed/uncertain journal remains useful after restarting the server. The browser's new launch token changes while the saved history remains in `~/.tcl-tv-debloat/`.

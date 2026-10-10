@@ -22,8 +22,13 @@ def identity(adb, serial):
 def parse_package(name, text):
     def find(pattern, convert=str):
         m=re.search(pattern,text,re.M);return convert(m[1]) if m else None
+    # Updated system apps also have a factory copy under Hidden system packages.
+    # Its version and enabled state do not describe the installed application.
+    text=re.split(r'^Hidden system packages:\s*$',text,maxsplit=1,flags=re.M)[0]
+    installed=re.search(r'^Packages:\s*$',text,re.M)
+    if installed:text=text[installed.end():]
     # Per-package dumps may contain resolver entries before Packages. Use the installed block.
-    blocks=list(re.finditer(r'^\s*Package \['+re.escape(name)+r'\].*$',text,re.M))
+    blocks=list(re.finditer(r'^[ \t]*Package \['+re.escape(name)+r'\].*$',text,re.M))
     if blocks:
         text=text[blocks[-1].start():]
         next_block=re.search(r'\n[ \t]*Package \[',text)
@@ -78,5 +83,9 @@ def scan(adb, serial, catalog, *, on_progress=None, cancel=None):
     if adb.shell(serial,['getprop','ro.build.fingerprint'])!=device['fingerprint']:
         inv['status']='partial';inv['errors'].append('Firmware changed during scan. Scan again.')
         for p in inv['packages']: p['disable_eligible']=False;p['limitations'].append('Inconsistent firmware snapshot.')
+    from .privacy import snapshot
+    inv['privacy_controls']=snapshot(adb,serial,device,inv['packages'],catalog)
+    if inv['errors'] or inv['status']=='cancelled':
+        for control in inv['privacy_controls']:control['eligible']=False
     if on_progress: on_progress({'stage':'scan_complete','completed':len(inv['packages']),'total':len(names),'message':'Inventory saved; no changes made.'})
     return inv
