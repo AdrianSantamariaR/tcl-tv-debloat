@@ -1,0 +1,3 @@
+include docs/*.md
+include tests/*.py tests/*.cjs
+include tests/fixtures/*.json tests/fixtures/*.txt

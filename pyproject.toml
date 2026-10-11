@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tcl-tv-debloat"
 version = "0.1.0"
-description = "Local, evidence-based Google TV package review and reversible debloat"
+description = "Review TCL Google TV apps and reduce supported reporting locally, with automatic recovery points to undo changes."
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 [project.scripts]
@@ -12,4 +13,9 @@ tcl-tv-debloat = "tcl_tv_debloat.cli:main"
 [tool.setuptools.packages.find]
 include = ["tcl_tv_debloat*"]
 [tool.setuptools.package-data]
-tcl_tv_debloat = ["web/*", "data/*.json", "data/profiles/*.json"]
+tcl_tv_debloat = [
+    "web/index.html", "web/app.js", "web/validation.js", "web/style.css",
+    "web/favicon.svg", "web/guide-debugging.svg", "web/guide-connect.png",
+    "web/guide-review.png", "web/guide-restore.png",
+    "data/catalog.json", "data/profiles/*.json",
+]

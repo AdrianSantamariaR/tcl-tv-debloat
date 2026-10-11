@@ -54,6 +54,79 @@ async function openApp(inv, result = preview(), journals = [], flow = {}) {
   await showHistory(page);
   return {page,requests,calls,errors};
 }
+test('a new operation clears the previous progress count before polling responds', async () => {
+  // Catches a completed scan count being displayed while saving another plan.
+  const inv=snapshot([control('tcl_bi_reporting','1')]);
+  const plan=preview([],[settingChange]);
+  const {page,errors}=await openApp(inv,plan,[],{
+    scan:{id:'scan-job'},'jobs/scan-job':{...completedJob(inv),completed:5,total:5,stage:'scan_complete'}
+  });
+  await page.locator('#rescan').click();
+  await page.waitForFunction(() => !document.getElementById('inventory-panel').hidden && !document.body.classList.contains('working'));
+  await page.locator('#use-privacy').click();
+  let release;const pending=new Promise(resolve=>{release=resolve;});
+  await page.route('**/api/jobs/job-one',async route=>{await pending;await route.fulfill({json:completedJob(plan)});});
+  await page.locator('#preview').click();await page.locator('#progress-panel').waitFor();
+  assert.equal(await page.locator('#progress-detail').innerText(),'');
+  release();await page.locator('#preview-panel').waitFor();
+  assert.deepEqual(errors,[]);await page.close();
+});
+test('recovery download is visible and exports the selected saved journal', async () => {
+  // Catches exporting a different journal or hiding recovery behind technical details.
+  const inv=snapshot();
+  const journal={...preview([{...packageRecord,before:0,after:3,outcome:'successful'}]),id:'saved-apply',inventory_id:inv.id,status:'complete',device:{...inv.device},recovery_saved_at:'2026-10-11T10:00:00Z'};
+  const {page,errors}=await openApp(inv,preview(),[journal]);
+  await page.locator('#history button').click();
+  const downloaded=page.waitForEvent('download');await page.locator('#download-recovery').click();
+  const data=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
+  assert.equal(data.id,'saved-apply');assert.equal(data.changes[0].before,0);
+  assert.equal(await page.locator('#result-recovery').isVisible(),true);
+  assert.deepEqual(errors,[]);await page.close();
+});
+test('review explains the loss of an app and preserves its reviewed reason', async () => {
+  // Catches a review showing only a package identifier without the consequence.
+  const inv=snapshot();
+  const plan=preview([{package:'com.example.optional',label:'Optional content app',before:0,after:3,reason:'Provides optional entertainment.',features:['Content'],outcome:'pending'}]);
+  const {page,errors}=await openApp(inv,plan);
+  await page.locator('#action-com\\.example\\.optional').selectOption('disable');await page.locator('#preview').click();
+  await page.locator('#preview-panel').waitFor();
+  assert.match(await page.locator('#changes').innerText(),/unavailable.*Optional content app|Optional content app.*unavailable/s);
+  assert.match(await page.locator('#changes').innerText(),/Provides optional entertainment/);
+  assert.deepEqual(errors,[]);await page.close();
+});
+test('changing an app action preserves keyboard focus', async () => {
+  // Catches rebuilding the app list and detaching the currently focused select.
+  const {page,errors}=await openApp(snapshot());
+  const action=page.locator('#action-com\\.example\\.optional');
+  await action.focus();await action.selectOption('disable');
+  assert.equal(await action.evaluate(node=>node===document.activeElement),true);
+  assert.deepEqual(errors,[]);await page.close();
+});
+test('failed recovery is not offered as an undo source or downloadable backup', async () => {
+  // Catches advertising a damaged, unverified recovery record after a disk failure.
+  const inv=snapshot();
+  for (const status of ['recovery_failed','recovery_invalid']) {
+    const journal={...preview([{...packageRecord,before:0,after:3,outcome:'pending'}]),id:'failed-apply',inventory_id:inv.id,status,recovery_status:'failed',device:{...inv.device}};
+    const {page,errors}=await openApp(inv,preview(),[journal]);
+    assert.equal(await page.locator('#source-journal option[value="failed-apply"]').count(),0);
+    assert.match(await page.locator('#history').innerText(),/Recovery unavailable/);
+    await page.locator('#history button').click();
+    assert.equal(await page.locator('#download-recovery').isVisible(),false);
+    assert.equal(await page.locator('#undo-latest').isVisible(),false);
+    if (status==='recovery_invalid') assert.doesNotMatch(await page.locator('#result-summary').innerText(),/No TV changes were sent/);
+    assert.deepEqual(errors,[]);await page.close();
+  }
+});
+test('restoration record does not advertise the apply-journal recovery command', async () => {
+  // The engine cannot use a restore journal as the source of another restoration.
+  const inv=snapshot();
+  const journal={...preview([{...packageRecord,before:3,after:0,outcome:'successful'}]),id:'saved-restore',inventory_id:inv.id,mode:'restore',status:'complete',device:{...inv.device}};
+  const {page,errors}=await openApp(inv,preview(),[journal]);
+  await page.locator('#history button').click();
+  await page.locator('#result-recovery details > summary').click();
+  assert.doesNotMatch(await page.locator('#result-recovery').innerText(),/restore --journal/);
+  assert.deepEqual(errors,[]);await page.close();
+});
 test('privacy controls start unchecked and absent values are not represented as off', async () => {
   // Catches automatic opt-in and treating a missing global setting as zero.
   const {page,errors} = await openApp(snapshot([control('tcl_bi_reporting',null),control('tcl_diagnostics','1')]));
@@ -226,6 +299,7 @@ test('one-click privacy uses a fresh scan and applies only supported flags', asy
     {operation:'scan',payload:{serial:'simulated-tv',deep:false}}
   ]);
   assert.equal(await page.locator('#suggest-apps').isDisabled(),false);
+  await page.locator('#automatic-checks > summary').click();
   assert.match(await page.locator('#automatic-checks').innerText(),/1.*verified/i);
   assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
   assert.deepEqual(errors,[]); await page.close();

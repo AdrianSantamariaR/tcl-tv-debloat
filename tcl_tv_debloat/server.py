@@ -7,7 +7,8 @@ from .rea import check_prerequisites
 from .store import identifier
 
 MAX_BODY=1024*1024
-ASSETS={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/validation.js':'validation.js','/style.css':'style.css'}
+ASSETS={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/validation.js':'validation.js','/style.css':'style.css',
+        '/favicon.svg':'favicon.svg','/guide-debugging.svg':'guide-debugging.svg','/guide-connect.png':'guide-connect.png','/guide-review.png':'guide-review.png','/guide-restore.png':'guide-restore.png'}
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
@@ -33,7 +34,7 @@ class Handler(BaseHTTPRequestHandler):
         app=self.server.app
         try:
             if self.path in ASSETS:
-                asset=ASSETS[self.path];types={'html':'text/html; charset=utf-8','js':'text/javascript; charset=utf-8','css':'text/css; charset=utf-8'}
+                asset=ASSETS[self.path];types={'html':'text/html; charset=utf-8','js':'text/javascript; charset=utf-8','css':'text/css; charset=utf-8','svg':'image/svg+xml','png':'image/png'}
                 self.respond(200,(Path(__file__).parent/'web'/asset).read_bytes(),types[asset.split('.')[-1]]);return
             if self.path=='/api/status':value={'data_dir':str(app.store.root),'scope':'Android user 0','version':'0.1.0'}
             elif self.path=='/api/dependencies':value=check_prerequisites(app.adb,app.rea)

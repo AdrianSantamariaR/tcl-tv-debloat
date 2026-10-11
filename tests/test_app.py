@@ -31,3 +31,12 @@ class AppTests(unittest.TestCase):
         self.assertIsNotNone(j['result_id']);self.assertEqual(self.app.store.load('sessions',j['result_id'])['status'],'cancelled')
         for operation,payload in [('shell',{'command':'id'}),('scan',{'serial':'fixture-tv','deep':'yes'}),('apply',{'plan_id':'x','changes':[]})]:
             with self.assertRaises(ValueError):self.app.run(operation,payload)
+
+    def test_duplicate_failed_recovery_does_not_report_operation_complete(self):
+        inv=self.app.run('scan',{'serial':'fixture-tv','deep':False})
+        for status in ('recovery_failed','recovery_invalid'):
+            p=self.app.run('preview',{'inventory_id':inv['id'],'selection':{'com.example.optional':'disable'}})
+            p.update(status=status,recovery_status='failed');self.app.store.save('plans',p)
+            job=self.wait(self.app.start('apply',{'plan_id':p['id']}))
+            self.assertEqual(job['status'],'failed')
+        self.assertNotIn('disable-user',self.path.with_name('commands.jsonl').read_text())

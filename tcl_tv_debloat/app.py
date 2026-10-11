@@ -56,7 +56,7 @@ class Application:
                 result=self._dispatch(operation,payload,on_progress=progress,cancel=stop)
                 with self._jobs_lock:
                     job['result_id']=result.get('id');job['result']=result if not result.get('id') else None
-                    job['status']='cancelled' if result.get('status')=='cancelled' or result.get('coverage',{}).get('rea_status')=='cancelled' else ('failed' if result.get('status')=='failed' else 'complete')
+                    job['status']='cancelled' if result.get('status')=='cancelled' or result.get('coverage',{}).get('rea_status')=='cancelled' else ('failed' if result.get('status') in ('failed','recovery_failed','recovery_invalid') else 'complete')
                     job['message']='Operation '+job['status']+'.'
             except Exception as e:
                 with self._jobs_lock:job.update(status='failed',error=str(e),message='Operation failed.')

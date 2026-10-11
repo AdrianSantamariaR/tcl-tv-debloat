@@ -3,6 +3,7 @@ import copy,json
 from .adb import PACKAGE
 from .privacy import plan_changes, restore_changes, validate_change, read_flags, verify_live_owners
 from .inventory import record, identity, parse_package, match_guidance
+from .store import recovery_digest, verified_recovery
 
 STATES={0:'default-state',1:'enable',2:'disable',3:'disable-user',4:'disable-until-used'}
 
@@ -34,13 +35,14 @@ def build_plan(inv,selection,privacy_selection=None):
         p=packages[name];valid_package(p)
         if not p.get('disable_eligible'):raise ValueError('Package is not eligible for disabling: '+name)
         if p['enabled_state']==3:continue
-        plan['changes'].append({'package':name,'version_code':p['version_code'],'version_name':p['version_name'],'before':p['enabled_state'],'after':3,'action':'disable','outcome':'pending','diagnostic':'','features':p.get('features',[]),'purpose':p.get('purpose',''),'reason':p.get('reason',''),'guidance_level':p.get('guidance_level','unknown'),'verification':p.get('verification','unreviewed'),'evidence':p.get('evidence',[])})
+        plan['changes'].append({'package':name,'label':p.get('label',name),'version_code':p['version_code'],'version_name':p['version_name'],'before':p['enabled_state'],'after':3,'action':'disable','outcome':'pending','diagnostic':'','features':p.get('features',[]),'purpose':p.get('purpose',''),'reason':p.get('reason',''),'guidance_level':p.get('guidance_level','unknown'),'verification':p.get('verification','unreviewed'),'evidence':p.get('evidence',[])})
     settings=plan_changes(inv,privacy_selection)
     if settings:plan['setting_changes']=settings
     return plan
 
 def build_restore_plan(inv,journal,packages=None):
     if journal.get('mode')!='apply' or journal.get('status')=='preview':raise ValueError('Select a saved apply journal that has started.')
+    if not verified_recovery(journal):raise ValueError('Select a journal with verified recovery.')
     same_device(journal['device'],inv['device']);plan=base_plan(inv,'restore',journal['id'])
     current={p['package']:p for p in inv['packages']};selected=set(packages) if packages is not None else {c['package'] for c in journal['changes']}
     if not selected.issubset({c['package'] for c in journal['changes']}):raise ValueError('Package is absent from the source journal.')
@@ -66,11 +68,13 @@ def execute_plan(adb,store,catalog,plan,*,on_progress=None,cancel=None):
         plan=store.load('plans',plan['id'])
         if plan['status']!='preview':return plan
         if plan.get('schema_version')!=1 or plan.get('target_user')!=0 or plan.get('mode') not in ('apply','restore'):raise ValueError('Invalid plan.')
+        if on_progress:on_progress({'stage':'preflight','completed':0,'total':None,'message':'Checking TV identity, firmware and original states…'})
         serial=plan['device']['serial'];now=identity(adb,serial);same_device(plan['device'],now)
         source=None
         if plan['mode']=='restore':
             source=store.load('plans',plan['source_plan_id'])
             if source.get('mode')!='apply' or source.get('status')=='preview':raise ValueError('Invalid source apply journal.')
+            if not verified_recovery(source):raise ValueError('Select a journal with verified recovery.')
             same_device(source['device'],now)
         seen=set()
         for c in plan['changes']:
@@ -100,17 +104,34 @@ def execute_plan(adb,store,catalog,plan,*,on_progress=None,cancel=None):
                 if len(matches)!=1:raise ValueError('Restore does not match its source privacy journal.')
                 original=matches[0];validate_change(original,'apply')
                 if c['after']!=original['before'] or c['before'] not in (original['before'],original['after']) or c['owner_versions']!=original['owner_versions']:raise ValueError('Restore does not match its source privacy journal.')
-        journal=copy.deepcopy(plan);journal['status']='running';journal['started_at']=record()['captured_at'];store.save('plans',journal)
+        journal=copy.deepcopy(plan);journal['status']='running';journal['started_at']=record()['captured_at']
+        journal['recovery_status']='pending'
+        journal['recovery_digest']=recovery_digest(journal)
+        if on_progress:on_progress({'stage':'recovery','completed':0,'total':None,'message':'Saving the original states on this computer…'})
+        try:
+            store.save_verified('plans',journal)
+            journal['recovery_status']='verified';journal['recovery_saved_at']=record()['captured_at']
+            store.save_verified('plans',journal)
+        except RuntimeError as error:
+            journal['status']='recovery_failed';journal['recovery_status']='failed'
+            journal.pop('recovery_saved_at',None);journal['recovery_error']=str(error)
+            try:store.save('plans',journal)
+            except (OSError,ValueError):pass  # Loading still rejects unchecked or damaged records.
+            raise
+        if on_progress:on_progress({'stage':'recovery_saved','completed':0,'total':None,'message':'Recovery point saved and checked. Ready to make changes.'})
         work=[('package',c) for c in journal['changes']]+[('setting',c) for c in journal.get('setting_changes',[])]
+        verb='Restoring ' if plan['mode']=='restore' else 'Applying '
         for n,(kind,c) in enumerate(work):
             if cancel and cancel.is_set():journal['status']='cancelled';break
             if c['before']==c['after']:c['outcome']='unchanged';store.save('plans',journal);continue
-            if on_progress:on_progress({'stage':'changes','completed':n,'total':len(work),'message':'Applying '+(c['package'] if kind=='package' else c['label'])})
+            label=c.get('label') or c.get('package') or c['control_id']
+            if on_progress:on_progress({'stage':'changes','completed':n,'total':len(work),'message':verb+label})
             if cancel and cancel.is_set():journal['status']='cancelled';break
             try:
                 # Durable pending entry already exists before sending this command.
                 if kind=='package':
                     adb.shell(serial,['pm',STATES[c['after']],'--user','0',c['package']])
+                    if on_progress:on_progress({'stage':'verification','completed':n,'total':len(work),'message':'Checking the resulting state of '+label})
                     live=parse_package(c['package'],adb.shell(serial,['dumpsys','package',c['package']]))
                     if live['enabled_state']!=c['after']:raise RuntimeError('State verification failed.')
                 else:
@@ -120,13 +141,18 @@ def execute_plan(adb,store,catalog,plan,*,on_progress=None,cancel=None):
                     args=['settings','--user','0','delete' if c['after'] is None else 'put','global',c['key']]
                     if c['after'] is not None:args.append(c['after'])
                     adb.shell(serial,args)
+                    if on_progress:on_progress({'stage':'verification','completed':n,'total':len(work),'message':'Checking the resulting value of '+label})
                     if read_flags(adb,serial)[c['key']]!=c['after']:raise RuntimeError('Privacy setting verification failed.')
                 c['outcome']='successful'
             except (ValueError,RuntimeError) as e:
                 c['outcome']='uncertain';c['diagnostic']=str(e);journal['status']='failed';store.save('plans',journal);break
             store.save('plans',journal)
+            if on_progress:on_progress({'stage':'change_complete','completed':n+1,'total':len(work),'message':label+' verified.'})
         else:journal['status']='complete'
-        journal['finished_at']=record()['captured_at'];store.save('plans',journal);return journal
+        journal['finished_at']=record()['captured_at'];store.save('plans',journal)
+        if on_progress:on_progress({'stage':journal['status'],'completed':sum(c['outcome'] in ('successful','unchanged') for _,c in work),'total':len(work),'message':'Changes verified and saved.' if journal['status']=='complete' else 'Stopped. Recovery is saved; review the recorded outcomes.'})
+        return journal
 
 def export_recovery(journal):
+    if journal.get('mode')!='apply' or not verified_recovery(journal):raise ValueError('Choose an apply journal with verified recovery.')
     return {'plan.json':json.dumps(journal,indent=2),'restore.py':"from pathlib import Path\nfrom tcl_tv_debloat.cli import main\nraise SystemExit(main(['restore', '--journal', str(Path(__file__).with_name('plan.json'))]))\n"}

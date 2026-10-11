@@ -8,6 +8,7 @@ dist/
 *.apk
 *.jar
 sessions/
+plans/
 evidence/
 plan.json
 journal.json
@@ -22,6 +23,7 @@ docs/superpowers/
 .DS_Store
 .env
 .env.*
+/Claude outputs/
 
 # Network captures, device dumps and local application data
 *.pcap
@@ -36,3 +38,7 @@ docs/superpowers/
 inventory-*.json
 plan-*.json
 journal-*.json
+tv-recovery-*.json
+tv-restoration-*.json
+tv-checks-*.json
+/restore.py
