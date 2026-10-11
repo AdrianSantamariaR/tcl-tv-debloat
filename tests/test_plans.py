@@ -1,4 +1,5 @@
 import json,tempfile,threading,unittest,copy
+from unittest.mock import patch
 from pathlib import Path
 from tests.support import fake_adb,fixture_catalog,change_state
 from tcl_tv_debloat.inventory import scan
@@ -80,3 +81,118 @@ class PlanTests(unittest.TestCase):
         self.assertEqual(change['features'],['casting']);self.assertEqual(change['reason'],'Removes phone casting')
         self.assertEqual(change['purpose'],'Optional phone casting');self.assertEqual(change['evidence'],['owned-evidence'])
         p['enabled_state']=3;self.assertEqual(build_plan(self.inv,{'com.example.optional':'disable'})['changes'],[])
+
+    def test_unreadable_or_changed_recovery_blocks_apply_and_restore(self):
+        # A damaged disk record must never be followed by a TV write.
+        for mode in ('apply','restore'):
+            for damage in ('unreadable','changed','write_failure'):
+                with self.subTest(mode=mode,damage=damage):
+                    change_state(self.state,packages={'com.example.optional':{'enabled':0,'version_code':7,'version_name':'1.0'},'android':{'enabled':0,'version_code':7,'version_name':'1.0'}})
+                    plan=self.save_plan(scan(self.adb,'fixture-tv',self.catalog))
+                    if mode=='restore':
+                        journal=execute_plan(self.adb,self.store,self.catalog,plan)
+                        plan=build_restore_plan(scan(self.adb,'fixture-tv',self.catalog),journal)
+                        self.store.save('plans',plan)
+                    count=len(self.mutations());before=self.state_of();save=self.store.save
+                    def damaged_save(kind,value):
+                        if value.get('status')!='running':return save(kind,value)
+                        if damage=='write_failure':raise OSError('disk unavailable')
+                        ident=save(kind,value)
+                        dest=self.root/'data'/kind/(ident+'.json')
+                        if damage=='unreadable':dest.write_text('{partial')
+                        else:
+                            broken=json.loads(dest.read_text());broken['changes'][0]['before']=42
+                            dest.write_text(json.dumps(broken))
+                        return ident
+                    with patch.object(self.store,'save',side_effect=damaged_save):
+                        with self.assertRaisesRegex(RuntimeError,'Recovery point'):
+                            execute_plan(self.adb,self.store,self.catalog,plan)
+                    self.assertEqual(self.state_of(),before)
+                    self.assertEqual(len(self.mutations()),count)
+                    failed=self.store.load('plans',plan['id'])
+                    self.assertEqual(failed['status'],'recovery_failed')
+                    with self.assertRaises(ValueError):
+                        build_restore_plan(scan(self.adb,'fixture-tv',self.catalog),failed)
+
+    def test_unverified_recovery_record_cannot_be_used_to_restore(self):
+        # Catches treating a record saved before its readback as a usable backup.
+        pending={**self.save_plan(),'status':'running','recovery_status':'pending'}
+        with self.assertRaisesRegex(ValueError,'verified recovery'):
+            build_restore_plan(self.inv,pending)
+
+    def test_restore_rechecks_recovery_source_before_mutation(self):
+        journal=execute_plan(self.adb,self.store,self.catalog,self.save_plan())
+        undo=build_restore_plan(scan(self.adb,'fixture-tv',self.catalog),journal)
+        self.store.save('plans',undo)
+        count=len(self.mutations())
+        journal['recovery_status']='pending';self.store.save('plans',journal)
+        with self.assertRaisesRegex(ValueError,'verified recovery'):
+            execute_plan(self.adb,self.store,self.catalog,undo)
+        self.assertEqual(len(self.mutations()),count)
+        self.assertEqual(self.state_of(),3)
+
+    def test_second_recovery_write_damage_and_failed_error_save_blocks_restore(self):
+        # A failed error write must not make a damaged "verified" candidate usable.
+        plan=self.save_plan();save=self.store.save
+        def damaged_save(kind,value):
+            if value.get('status')=='recovery_failed':raise OSError('disk unavailable')
+            ident=save(kind,value)
+            if value.get('recovery_status')=='verified':
+                dest=self.root/'data'/kind/(ident+'.json')
+                broken=json.loads(dest.read_text())
+                broken['changes'][0].update(before=2,after=0)
+                dest.write_text(json.dumps(broken))
+            return ident
+        with patch.object(self.store,'save',side_effect=damaged_save):
+            with self.assertRaisesRegex(RuntimeError,'Recovery point'):
+                execute_plan(self.adb,self.store,self.catalog,plan)
+        self.assertEqual(self.mutations(),[])
+        raw=json.loads((self.root/'data'/'plans'/(plan['id']+'.json')).read_text())
+        with self.assertRaisesRegex(ValueError,'verified recovery'):
+            build_restore_plan(self.inv,raw)
+        invalid=self.store.load('plans',plan['id'])
+        self.assertEqual(invalid['recovery_status'],'failed')
+        with self.assertRaises(ValueError):export_recovery(raw)
+
+    def test_recovery_checksum_required_for_new_records_but_legacy_is_compatible(self):
+        journal=execute_plan(self.adb,self.store,self.catalog,self.save_plan())
+        inv=scan(self.adb,'fixture-tv',self.catalog)
+        for damage in ('missing_digest','missing_status','original_state','setting_entry'):
+            broken=copy.deepcopy(journal)
+            if damage=='missing_digest':broken.pop('recovery_digest')
+            elif damage=='missing_status':broken.pop('recovery_status')
+            elif damage=='original_state':broken['changes'][0]['before']=2
+            else:broken['setting_changes']=[{'control_id':'added','before':'1','after':'0'}]
+            with self.subTest(damage=damage):
+                with self.assertRaisesRegex(ValueError,'verified recovery'):build_restore_plan(inv,broken)
+                with self.assertRaises(ValueError):export_recovery(broken)
+                self.store.save('plans',broken)
+                self.assertEqual(self.store.load('plans',broken['id'])['status'],'recovery_invalid')
+        legacy=copy.deepcopy(journal);legacy.pop('recovery_digest');legacy.pop('recovery_status')
+        self.assertEqual(build_restore_plan(inv,legacy)['changes'][0]['after'],0)
+
+    def test_progress_reports_checked_recovery_and_verified_completion(self):
+        # Catches a finished counter emitted before a TV state is read back.
+        plan=self.save_plan();events=[]
+        def progress(event):
+            events.append(dict(event))
+            if event['stage']=='recovery_saved':
+                saved=self.store.load('plans',plan['id'])
+                self.assertEqual(saved['changes'][0]['before'],0)
+                self.assertEqual(self.mutations(),[])
+            if event['stage']=='change_complete':self.assertEqual(self.state_of(),3)
+        journal=execute_plan(self.adb,self.store,self.catalog,plan,on_progress=progress)
+        self.assertEqual(journal['status'],'complete')
+        self.assertIn('recovery_saved_at',journal)
+        self.assertEqual([e['stage'] for e in events],['preflight','recovery','recovery_saved','changes','verification','change_complete','complete'])
+        self.assertEqual(events[-1]['completed'],1)
+        self.assertEqual(events[-1]['total'],1)
+
+    def test_cancellation_during_preflight_never_changes_tv(self):
+        # Catches ignoring Stop while checking the TV before saving recovery.
+        stop=threading.Event()
+        def progress(event):
+            if event['stage']=='preflight':stop.set()
+        journal=execute_plan(self.adb,self.store,self.catalog,self.save_plan(),on_progress=progress,cancel=stop)
+        self.assertEqual(journal['status'],'cancelled')
+        self.assertEqual(self.mutations(),[])

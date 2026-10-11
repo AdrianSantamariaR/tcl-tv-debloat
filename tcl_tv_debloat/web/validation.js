@@ -53,9 +53,12 @@ class FunctionalChecks {
     const automatic = this.panel.querySelector('#automatic-checks'); automatic.replaceChildren();
     const counts = {verified:0, uncertain:0, unchanged:0, not_completed:0};
     record.automatic_checks.forEach(check => counts[check.result]++);
-    automatic.append(this.create('h3','Automatic verification'),this.create('p',counts.verified + ' verified · ' + counts.uncertain + ' uncertain · ' + counts.not_completed + ' not completed · ' + counts.unchanged + ' unchanged'));
-    automatic.append(this.create('small','Successful changes were read back by the app at apply time. These checks confirm setting values and package states; picture, sound and network traffic need separate evidence.'));
-    for (const check of record.automatic_checks) automatic.append(this.create('small',check.target + ' · ' + check.result + (check.diagnostic ? ' · ' + check.diagnostic : '')));
+    automatic.open = counts.uncertain > 0 || counts.not_completed > 0;
+    const body = this.create('div',undefined,'disclosure-body');
+    automatic.append(this.create('summary','Verification details'),body);
+    body.append(this.create('p',counts.verified + ' verified · ' + counts.uncertain + ' uncertain · ' + counts.not_completed + ' not completed · ' + counts.unchanged + ' unchanged'));
+    body.append(this.create('p','Saved checks of app states and settings. Picture, sound and network traffic are not verified.'));
+    for (const check of record.automatic_checks) body.append(this.create('p',check.target + ' · ' + check.result + (check.diagnostic ? ' · ' + check.diagnostic : '')));
     this.panel.querySelector('#validation-meta').textContent = (journal.device.model || journal.device.serial) + ' · Journal ' + journal.id + ' · ' + journal.status;
     const list = this.panel.querySelector('#validation-checks'); list.replaceChildren();
     for (const [id, label, scope] of this.tests) {

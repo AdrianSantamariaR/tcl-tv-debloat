@@ -55,3 +55,15 @@ class ServerTests(unittest.TestCase):
         c=http.client.HTTPConnection('127.0.0.1',self.port)
         c.request('POST','/api/scan',body='{bad',headers={'X-Session-Token':self.server.session_token,'Content-Type':'application/json'})
         r=c.getresponse();self.assertEqual(r.status,400);r.read();c.close()
+
+    def test_local_walkthrough_assets_have_image_types_and_no_path_escape(self):
+        # Catches broken guide images or a broad static route exposing private files.
+        for asset,kind,signature in [('guide-debugging.svg','image/svg+xml',b'<svg'),('guide-review.png','image/png',b'\x89PNG'),('guide-restore.png','image/png',b'\x89PNG')]:
+            c=http.client.HTTPConnection('127.0.0.1',self.port)
+            c.request('GET','/'+asset)
+            response=c.getresponse();body=response.read();c.close()
+            self.assertEqual(response.status,200,asset)
+            self.assertTrue(response.getheader('Content-Type').startswith(kind))
+            self.assertTrue(body.startswith(signature))
+        self.assertEqual(self.request('/guide/../../state.json')[0],404)
+        self.assertFalse(self.state.with_name('commands.jsonl').exists())

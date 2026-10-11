@@ -59,5 +59,5 @@ def main(argv=None):
         output=json.dumps(result,indent=2,ensure_ascii=False)
         if getattr(args,'out',None):Path(args.out).write_text(output+'\n',encoding='utf-8')
         else:print(output)
-        return 1 if result.get('status') in ('failed','cancelled') else 0
+        return 1 if result.get('status') in ('failed','cancelled','recovery_failed','recovery_invalid') else 0
     except (ValueError,RuntimeError,OSError,KeyError) as e:print('Error: '+str(e),file=sys.stderr);return 1

@@ -1,9 +1,24 @@
 """Private, versioned JSON and a cross-process mutation lock."""
-import json, os, tempfile, uuid
+import hashlib, json, os, tempfile, uuid
 from pathlib import Path
 from contextlib import contextmanager
 
 KINDS={'sessions','plans','evidence'}
+def recovery_digest(record):
+    """Checksum of the original states; progress and outcomes may change."""
+    original={key:record.get(key) for key in ('schema_version','id','inventory_id','device','mode','target_user','source_plan_id')}
+    for key in ('changes','setting_changes'):
+        original[key]=[{k:v for k,v in change.items() if k not in ('outcome','diagnostic')} for change in record.get(key,[])]
+    return hashlib.sha256(json.dumps(original,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def verified_recovery(record):
+    if record.get('status') not in ('running','complete','failed','cancelled'):return False
+    # Journals written before recovery metadata was introduced remain compatible.
+    if 'recovery_status' not in record and 'recovery_digest' not in record:return True
+    if record.get('recovery_status')!='verified' or not isinstance(record.get('recovery_digest'),str):return False
+    try:return record['recovery_digest']==recovery_digest(record)
+    except (TypeError,ValueError,AttributeError):return False
+
 def identifier(value):
     if not isinstance(value,str) or str(uuid.UUID(value))!=value: raise ValueError('Invalid record ID.')
     return value
@@ -34,7 +49,19 @@ class Store:
     def load(self,kind,ident):
         r=json.loads(self._path(kind,ident).read_text(encoding='utf-8'))
         if r.get('schema_version')!=1 or r.get('id')!=ident:raise ValueError('Unsupported or inconsistent record.')
+        if kind=='plans' and ('recovery_status' in r or 'recovery_digest' in r) and r.get('recovery_status')!='pending' and not verified_recovery(r) and r.get('status')!='recovery_failed':
+            r['status']='recovery_invalid';r['recovery_status']='failed'
+            r['recovery_error']='Recorded original states do not match checked recovery.'
         return r
+    def save_verified(self,kind,record):
+        """A recovery record must survive a disk read before any device write."""
+        try:
+            self.save(kind,record)
+            if self.load(kind,record['id'])!=record:
+                raise ValueError('Saved contents do not match the recovery record.')
+        except (OSError,ValueError) as error:
+            raise RuntimeError('Recovery point could not be saved and checked. No TV changes were sent. '+str(error)) from error
+        return record['id']
     def list(self,kind):
         if kind not in KINDS:raise ValueError('Unknown record kind.')
         return sorted((self.load(kind,p.stem) for p in (self.root/kind).glob('*.json')),key=lambda r:r.get('created_at',r.get('captured_at','')),reverse=True)
