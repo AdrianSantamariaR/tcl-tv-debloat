@@ -1,6 +1,6 @@
 # Apply, undo and recover
 
-Every new selection starts at **Keep as is**. Only eligible reviewed packages can be disabled; those changes affect Android user 0. Individually selected TCL reporting controls affect the whole device. A preview contains only effective changes and explains the selected package’s purpose, feature impact and evidence level. It is saved before execution. Apply checks the connected device, firmware, active user, every selected version and every selected state before sending the first command.
+A fresh scan selects no changes until the owner chooses a goal or individual controls. Goals prepare reviewed suggestions; they do not apply them. Only eligible reviewed packages can be disabled; those changes affect Android user 0. Individually selected TCL reporting controls affect the whole device. A preview contains only effective changes and explains the selected package’s purpose, feature impact and evidence level. It is saved before execution. Apply checks the connected device, firmware, active user, every selected version and every selected state before sending the first command.
 
 The journal is saved durably before the command and updated after verification. If a response is lost, the outcome is **uncertain**; the device may already have changed. Execution stops. A duplicate started plan ID returns its journal and does not repeat commands.
 
@@ -8,9 +8,9 @@ After apply or restoration, the browser marks its old inventory as a snapshot an
 
 ## Browser restoration
 
-1. Choose the **source apply journal** from saved history.
-2. Select **Preview restoration**. The app performs a fresh read-only scan.
-3. Review the original/expected states and select **Restore this preview**.
+1. From the result, select **Undo these changes**. For an earlier operation, open **History**, choose its saved apply journal and select **Review undo**.
+2. The app performs a fresh read-only scan of the journal’s TV.
+3. Confirm the TV identity and recorded states, then select **Restore these changes**.
 
 Already-original states are unchanged. A later state outside original/expected values, a different firmware, changed package version or different device blocks restoration for review. Protected status does not block legitimate journal-based recovery.
 

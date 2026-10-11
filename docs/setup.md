@@ -26,7 +26,7 @@ If ADB reports unauthorized, turn on the TV and accept its prompt. If no prompt 
 
 ## Choose analysis
 
-The wizard shows ADB for standard scanning, disabling and restoration. Expand **Optional tools for Deep** to see REA, Node.js, Java and JADX. Python is already running the app. Missing Deep dependencies do not block standard use. The app does not install dependencies for you.
+The **Connect** screen keeps tool details folded when ADB is ready. Open **Tools and advanced scanning**, then **Optional tools for Deep** to see REA, Node.js, Java and JADX. Python is already running the app. Missing Deep dependencies do not block standard use. The app does not install dependencies for you.
 
 **Needs configuration** means the app has no selected path; it does not prove the tool is absent from the computer. **Path not found** means a selected file does not exist. **Check failed** means a probe failed or the selected tool is incompatible. An agent's REA MCP configuration is separate from the application's environment. Set the paths described in [deep analysis](deep-analysis.md) in the launching terminal, then restart the app. **Recheck prerequisites** can check newly installed files but cannot import environment changes from another terminal.
 

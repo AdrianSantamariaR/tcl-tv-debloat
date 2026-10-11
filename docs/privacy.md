@@ -1,6 +1,6 @@
 # Reduce tracking
 
-After scanning, **Reduce TCL tracking now** reads a fresh inventory and applies the supported TCL BI and diagnostic flags that need changing, then verifies their values. It creates and saves the recovery plan automatically and changes no packages. Individually selected controls remain available alongside package choices; those selections use the existing preview and apply flow. It does not claim to remove all tracking, logs, cookies or queued reports.
+Choose **Reduce TCL reporting** for a reporting-only review. The optional shortcut under **Advanced**, **Reduce TCL tracking now**, reads a fresh inventory and applies the supported TCL BI and diagnostic flags that need changing, then verifies their values. It creates and saves the recovery plan automatically and changes no packages. Individually selected controls remain available alongside package choices; those selections use the existing preview and apply flow. It does not claim to remove all tracking, logs, cookies or queued reports.
 
 Automatic changes are available only for the reviewed TCL Android 12 firmware and exact versions of the relevant TCL applications. Other TVs can be scanned, but these switches remain unavailable until their behavior is reviewed. Core TTVS remains enabled because it also provides device services, updates and casting.
 

@@ -17,6 +17,9 @@ function snapshot(controls) {
 const settingChange = { control_id:'tcl_bi_reporting', label:'TCL BI statistics', namespace:'global', key:'tcl_bi_reporting', before:null, after:'0', purpose:'Optional reporting', reason:'Observed on firmware', features:['Reporting'], verification:'observed', guidance_level:'exact_firmware', evidence:[], action:'reduce_tracking', outcome:'pending', diagnostic:'', owner_versions:{} };
 function preview(changes = [], setting_changes = []) { return {id:'plan-one',mode:'apply',status:'preview',device:{serial:'simulated-tv'},identity_assurance:'exact identity',created_at:'2026-10-10T10:01:00',changes,setting_changes}; }
 function completedJob(result,status='complete') { return {status,result,error:null,message:'Done',stage:'complete',completed:0,total:null}; }
+async function showHistory(page) {
+  if (!await page.locator('#history-details').evaluate(node => node.open)) await page.locator('#open-history').click();
+}
 async function openApp(inv, result = preview(), journals = [], flow = {}) {
   const page = await browser.newPage(); const requests = []; const calls = []; const errors = [];
   page.setDefaultTimeout(3000);
@@ -41,8 +44,14 @@ async function openApp(inv, result = preview(), journals = [], flow = {}) {
   });
   await page.goto('http://privacy-ui.test/#private-test-token');
   if (inv) await page.waitForFunction(() => document.getElementById('tv-title').textContent.includes('Simulated'));
-  else await page.locator('#history button').first().waitFor();
+  else { await showHistory(page); await page.locator('#history button').first().waitFor(); }
   await page.waitForTimeout(30);
+  if (inv) {
+    await page.locator('#advanced-details > summary').click();
+    await page.locator('#keep-details > summary').click();
+    await page.locator('#quick-details > summary').click();
+  }
+  await showHistory(page);
   return {page,requests,calls,errors};
 }
 test('privacy controls start unchecked and absent values are not represented as off', async () => {
@@ -139,11 +148,13 @@ test('downloaded checks retain their source journal and never mark untested feat
   const inv=snapshot([control('tcl_bi_reporting','1')]);
   const journal={...preview([],[{...settingChange,outcome:'successful'}]),id:'apply-one',inventory_id:inv.id,status:'complete',device:{...inv.device},started_at:'2026-10-10T10:01:01',finished_at:'2026-10-10T10:01:02'};
   const {page,errors}=await openApp(inv,preview(),[journal]);
-  await page.locator('#history button').click();
+  await showHistory(page); await page.locator('#history button').click();
   await page.locator('#manual-checks summary').click();
   await page.locator('#validation-streaming').selectOption('working');
   await page.locator('#validation-hdmi').selectOption('problem');
+  await page.locator('#report-details > summary').click();
   await page.locator('#validation-notes').fill('No sound on HDMI');
+  if (!await page.locator('#report-details').evaluate(node => node.open)) await page.locator('#report-details > summary').click();
   const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
   const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
   assert.equal(report.source_apply_journal_id,'apply-one');
@@ -164,17 +175,18 @@ test('functional results stay with their journal when reviewing another TV', asy
   const first={...preview([],[{...settingChange,outcome:'successful'}]),id:'apply-one',inventory_id:inv.id,status:'complete',device:{...inv.device}};
   const second={...first,id:'apply-two',inventory_id:'other-inventory',device:{...inv.device,serial:'other-simulated-tv',fingerprint:'other/build'}};
   const {page,errors}=await openApp(inv,preview(),[first,second]);
-  await page.locator('#history button').nth(0).click();
+  await showHistory(page); await page.locator('#history button').nth(0).click();
   await page.locator('#manual-checks summary').click();
   await page.locator('#validation-streaming').selectOption('working');
-  await page.locator('#history button').nth(1).click();
+  await showHistory(page); await page.locator('#history button').nth(1).click();
   assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
+  if (!await page.locator('#report-details').evaluate(node => node.open)) await page.locator('#report-details > summary').click();
   const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
   const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
   assert.equal(report.source_apply_journal_id,'apply-two');
   assert.equal(report.device.serial,'other-simulated-tv');
   assert.equal(report.baseline_inventory,null);
-  await page.locator('#history button').nth(0).click();
+  await showHistory(page); await page.locator('#history button').nth(0).click();
   assert.equal(await page.locator('#validation-streaming').inputValue(),'working');
   assert.deepEqual(errors,[]); await page.close();
 });
@@ -183,9 +195,10 @@ test('a saved journal remains usable when its original inventory is unavailable'
   // Catches failing to open older saved changes, or inventing a missing baseline.
   const journal={...preview([],[{...settingChange,outcome:'successful'}]),status:'complete'};
   const {page,errors}=await openApp(null,preview(),[journal]);
-  await page.locator('#history button').click();
+  await showHistory(page); await page.locator('#history button').click();
   await page.locator('#manual-checks summary').click();
   assert.equal(await page.locator('#validation-streaming').inputValue(),'untested');
+  if (!await page.locator('#report-details').evaluate(node => node.open)) await page.locator('#report-details > summary').click();
   const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
   const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
   assert.equal(report.source_apply_journal_id,journal.id);
@@ -254,6 +267,7 @@ test('suggested apps preserve wanted functions and never select unknown or prote
   await page.locator('#preview').click();
   await page.waitForFunction(() => !document.getElementById('preview-panel').hidden);
   assert.deepEqual(requests[0],{inventory_id:'inventory-one',selection:{'com.tcl.repairguide':'disable'}});
+  await page.locator('#edit-selection').click();
   await page.locator('#feature-preferences input[value=streaming]').uncheck();
   await page.locator('#feature-preferences input[value=voice]').uncheck();
   await page.locator('#preview').click();
@@ -266,10 +280,11 @@ test('automatic state verification never treats uncertain or pending changes as 
   // Catches presenting a failed apply as a successful automatic check.
   const journal={...preview([{package:'com.example.optional',before:0,after:3,outcome:'uncertain'}],[{...settingChange,outcome:'pending'}]),status:'failed'};
   const {page,errors}=await openApp(snapshot([]),preview(),[journal]);
-  await page.locator('#history button').click();
+  await showHistory(page); await page.locator('#history button').click();
   assert.match(await page.locator('#automatic-checks').innerText(),/0.*verified/i);
   assert.match(await page.locator('#automatic-checks').innerText(),/1.*uncertain/i);
   assert.match(await page.locator('#automatic-checks').innerText(),/1.*not completed/i);
+  if (!await page.locator('#report-details').evaluate(node => node.open)) await page.locator('#report-details > summary').click();
   const downloaded=page.waitForEvent('download'); await page.locator('#download-validation').click();
   const report=JSON.parse(fs.readFileSync(await (await downloaded).path(),'utf8'));
   assert.equal(report.automatic_checks[0].result,'uncertain');

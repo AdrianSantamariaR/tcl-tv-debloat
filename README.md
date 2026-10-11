@@ -39,21 +39,20 @@ See [setup and connection](docs/setup.md) if ADB isn't available or your TV need
 
 ## What you do in the browser
 
-1. Connect to your TV and approve this computer on the TV's debugging prompt.
-2. Run a standard scan. Optional deep analysis is explained in the wizard.
-3. Search the inventory and read the details for apps you don't want.
-4. Use **Reduce TCL tracking now** for supported reporting controls, or choose what to keep and click **Select suggested apps**. Review the suggested package changes and apply them together. Individual selections remain available.
-5. To undo, choose the saved apply journal and preview its restoration.
+1. **Connect:** authorize debugging on the TV and scan. Connecting by address starts the scan once that TV is authorized.
+2. **Choose:** select **Keep my smart TV**, **Reduce TCL reporting**, **HDMI & live TV**, or the manual **Use TV without an account** guide. Reviewed suggestions are prepared automatically. Customize retained features if needed.
+3. **Review:** check the changes and their function impact, then choose **Apply changes**. Nothing is applied just by choosing a goal.
+4. **Result:** see verified outcomes, record optional TV checks, or choose **Undo these changes**. Undo reads the TV again and shows a review before restoration.
 
-Keep the smart features you use: streaming, casting, voice control, accessibility, or all of them. Use the feature checkboxes with **Select suggested apps** to keep those functions while selecting reviewed extras. Protected and unresolved packages can't be disabled.
+Individual apps, settings, evidence and optional code inspection are under **Advanced** or **Tools and advanced scanning**. Previous changes are available in **History**. Protected and unresolved packages can't be disabled. The account-free guide explains factory-reset data loss and never performs the reset itself.
 
 The [Reduce tracking controls](docs/privacy.md) can close two reviewed TCL reporting flags without disabling core TTVS. They save and restore the exact original setting, including an originally absent key. Google and HbbTV controls have manual guidance.
 
 The privacy panel explains each control's scope. On matching reviewed versions it also describes independent TCL BI, messaging and component-update paths. A flag at 0 is a recorded setting value, not proof that all network reporting stopped.
 
-**Reduce TCL tracking now** performs a fresh scan, selects supported BI/diagnostic flags that need changing, creates a saved plan, applies it and verifies each value, then refreshes the inventory so you can continue with app suggestions. Already-off flags are skipped. It changes no packages and does not stop every reporting path. **Select suggested apps** covers known optional extras plus functions you uncheck; streaming, casting, voice and accessibility stay by default. Unknown, protected, already-disabled and unclassified optional functions are not suggested. Suggestions update with your preferences until you edit a package manually.
+The optional **Reduce TCL tracking now** shortcut under **Advanced** performs a fresh scan, selects supported BI/diagnostic flags that need changing, creates a saved plan, applies it and verifies each value, then refreshes the inventory so you can continue with app suggestions. Already-off flags are skipped. It changes no packages and does not stop every reporting path. The smart-TV profile retains streaming, casting and voice by default. The HDMI/live-TV profile stops retaining those optional smart functions. Accessibility keeps your chosen preference in both profiles. Unknown, protected, already-disabled and unclassified optional functions are not suggested. Suggestions update with your preferences until you edit a package manually.
 
-After applying changes, **Results and checks** shows automatic setting/package verification from the saved apply journal. Optional picture, sound and feature checks can be expanded to record playback, HDMI, casting and other observations. You can also open a saved apply journal with **View** to record them later. Manual results start at **Not tested** and stay with that journal within the current browser tab. **Download checks report** saves a private JSON report with the journal reference, device, recorded changes and your observations. Download before closing; the app does not reload these reports or measure network traffic. Keep the source journal separately for restoration.
+After applying changes, the **Result** screen shows automatic setting/package verification from the saved apply journal. Optional picture, sound and feature checks can be expanded to record playback, HDMI, casting and other observations. You can also open a saved apply journal with **View** to record them later. Manual results start at **Not tested** and stay with that journal within the current browser tab. **Download checks report** saves a private JSON report with the journal reference, device, recorded changes and your observations. Download before closing; the app does not reload these reports or measure network traffic. Keep the source journal separately for restoration.
 
 Package changes use Android's `disable-user` operation for user 0. They don't uninstall apps, erase their data, change permissions, root the TV, or flash firmware. [How apply and recovery work](docs/recovery.md) explains the saved states and what happens if a command is interrupted.
 
@@ -64,6 +63,7 @@ A Google TV or Android TV with an authorized ADB connection may be scanned. Whet
 The first profile comes from one TCL 55P6K running Android 12. Its inventory contains **142 packages**: 104 protected, 28 optional, and 10 needing review in the validation scan. This is an observed profile; it hasn't been tested through every possible removal and TV feature. Other firmware can be inventoried without inheriting these disable choices.
 
 See [compatibility and evidence](docs/compatibility.md) for supported environments and the limits of the observed profile. The [roadmap](docs/next-steps.md) describes current capabilities and planned improvements.
+
 
 Disabling unwanted apps doesn't prove all data collection has stopped. Some essential services also contain reporting code. The tool keeps those services protected and shows what the evidence can establish.
 
